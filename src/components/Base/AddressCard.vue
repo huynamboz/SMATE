@@ -30,6 +30,7 @@ export default defineComponent({
     border-radius: 16px;
     cursor: pointer;
     border: 1px solid #ebebeb;
+    cursor: pointer;
 
     .address-card-image {
         border-radius: 16px;

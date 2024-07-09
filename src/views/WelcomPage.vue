@@ -3,17 +3,17 @@
         <h1 class="welcom-page-welcom">Welcom</h1>
         <span class="welcom-page-content">CHỌN CHỦ ĐỀ BẠN YÊU THÍCH!</span>
         <div class="welcom-page-cards">
-            <hero-card v-for="item in data" :key="item.id" :hero-card="item" />
+            <hero-card v-for="item in data" :key="item.id" :hero-card="item" @click="addFavoritTheme(item.id)"
+                :class="{ 'activeTheme': isFavoriteTheme(item.id) }" />
         </div>
-        <ion-button color="#007AFF" expand="block" class="welcom-page-button">Tiếp tục</ion-button>
+        <ion-button href="/home" color="#007AFF" expand="block" class="welcom-page-button">Tiếp tục</ion-button>
     </ion-page>
 </template>
 
 <script setup lang="ts">
 import HeroCard from '@/components/Welcom/HeroCard.vue';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonButton, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { ellipse, square, triangle } from 'ionicons/icons';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const data = ref([
     {
@@ -65,12 +65,26 @@ const data = ref([
     },
 ]
 )
+
+const favoriteTheme = ref<number[]>([])
+
+function isFavoriteTheme(id: number) {
+    return favoriteTheme.value.includes(id)
+}
+
+function addFavoritTheme(id: number) {
+    if (isFavoriteTheme(id))
+        favoriteTheme.value = favoriteTheme.value.filter(item => item !== id)
+    else
+        favoriteTheme.value.push(id)
+}
 </script>
 
 <style scoped scss>
 .welcom-page-container {
     /* position: relative; */
 }
+
 .welcom-page-welcom {
     font-size: 32px;
     font-weight: 600;
@@ -96,6 +110,12 @@ const data = ref([
 
     &::-webkit-scrollbar {
         display: none;
+    }
+
+    .activeTheme {
+        opacity: 1;
+        transform: scale(1.02);
+        transition: all 0.3s;
     }
 }
 

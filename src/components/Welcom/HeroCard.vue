@@ -1,7 +1,7 @@
 <template>
     <ion-card class="hero-card-container">
         <span class="hero-card-title">{{ heroCard.title }}</span>
-        <ion-img class="hero-card-image" :src="heroCard.urlImage" alt="" />
+        <img class="hero-card-image" :src="heroCard.urlImage" alt="" />
     </ion-card>
 </template>
 
@@ -29,6 +29,7 @@ export default defineComponent({
     width: 156px;
     border-radius: 8px;
     cursor: pointer;
+    opacity: 0.6;
 
     .hero-card-image {
         border-radius: 8px;
@@ -36,7 +37,6 @@ export default defineComponent({
         width: 100%;
         height: 227px;
         object-fit: cover;
-        opacity: 0.6;
     }
 
     .hero-card-title {

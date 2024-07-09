@@ -12,7 +12,7 @@
                     <p> 1000k/người</p>
                 </div>
             </div>
-            <ion-icon :icon="heartOutline" size="large"></ion-icon>
+            <ion-icon :icon="heartOutline" size="large" @click.prevent="addFavoriteTour(id)"></ion-icon>
         </ion-card-content>
     </ion-card>
 </template>
@@ -25,6 +25,7 @@ import { heartOutline } from 'ionicons/icons';
 
 export default defineComponent({
     components: { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon },
+    emits: ['addFavoriteTour'],
     setup() {
         return { heartOutline };
     },
@@ -36,6 +37,8 @@ export default defineComponent({
     box-shadow: none;
     padding: 0;
     margin: 0;
+    cursor: pointer;
+    
 }
 
 .tour-card-image {

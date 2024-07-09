@@ -7,13 +7,7 @@ import HomePage from '@/views/HomePage.vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    // redirect: '/tabs/tab1',
     component: WelcomPage
-  },
-  {
-    path: '/home',
-    // redirect: '/tabs/tab1',
-    component: HomePage
   },
   {
     path: '/tabs/',
@@ -38,7 +32,15 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'create',
         component: () => import('@/views/create/Create.vue')
-      }
+      },
+      {
+        path: 'home',
+        component: () => import('@/views/HomePage.vue')
+      },
+      {
+        path: '/detail/:id',
+        component: HomePage
+      },
     ]
   }
 ]
