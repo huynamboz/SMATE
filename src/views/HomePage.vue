@@ -1,11 +1,11 @@
 <template>
     <ion-page class="home-page-container">
-        <ion-searchbar :debounce="500" class="home-page-search-bar" placeholder="Bạn muốn đi đâu?"></ion-searchbar>
+        <ion-searchbar :debounce="500" color="#fff" class="home-page-search-bar" placeholder="Bạn muốn đi đâu?"></ion-searchbar>
         <div class="home-page-address-cards">
             <address-card class="home-page-address-cards-item" v-for="item in data" :key="item.id" :address-card="item" />
         </div>
         <div class="home-page-tour-cards">
-            <tour-card v-for="item in data" :key="item.id" />
+            <tour-card class="home-page-tour-cards-item" v-for="item in data" :key="item.id" />
         </div>
     </ion-page>
 </template>
@@ -75,7 +75,10 @@ const data = ref([
 }
 ion-searchbar.home-page-search-bar {
     background-color: #fff;
+    border: 1px solid #ebebeb;
     border-radius: 18px;
+    padding: 0 10px;
+    min-height: 40px;
 }
 
 .home-page-content {
@@ -93,6 +96,7 @@ ion-searchbar.home-page-search-bar {
     justify-content: center;
     gap: 12px;
     overflow: auto;
+    min-height: 120px;
 
     &::-webkit-scrollbar {
         display: none;
@@ -109,6 +113,17 @@ ion-searchbar.home-page-search-bar {
 }
 
 .home-page-tour-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: auto;
 
+    .home-page-tour-cards-item {
+        flex: 0 0 auto;
+        margin-right: 10px;
+        text-align: center;
+        padding: 4px;
+        /* height: 100px; */
+    }
 }
 </style>
