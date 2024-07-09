@@ -8,3 +8,8 @@
 :host(.button-solid) {
   --box-shadow: 1px 1px 20px 1px rgb(0 0 0 / 9%);
 }
+
+* {
+  margin: 0;
+  padding: 0;
+}
