@@ -121,7 +121,7 @@ ion-input.custom.md .input-bottom .counter {
 }
 </style>
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonRange } from '@ionic/vue';
+import { IonPage, IonHeader,IonButton, IonToolbar, IonTitle, IonContent, IonRange, IonSelect, IonSelectOption } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 import { addCircle, removeCircle } from 'ionicons/icons';
 import { ref } from 'vue';

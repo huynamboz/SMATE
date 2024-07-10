@@ -3,14 +3,16 @@
         <ion-searchbar :debounce="500" color="#fff" class="home-page-search-bar"
             placeholder="Bạn muốn đi đâu?"></ion-searchbar>
         <div class="home-page-address-cards">
-            <address-card class="home-page-address-cards-item" v-for="item in themes" :key="item.id"
+            <address-card class="home-page-address-cards-item" v-for="item in addresses" :key="item.id"
                 :address-card="item" @click="chooseAdrress(item.title)" />
         </div>
         <div class="home-page-tour-cards">
-            <tour-card class="home-page-tour-cards-item" v-for="item in tours" :key="item.id"
-                :href="`detail/${item.id}`" :tour-item="item"
+          <router-link  class="home-page-tour-cards-item" v-for="item in tours" :key="item.id" :to="`/detail/${item.id}`">
+            <tour-card
+                :tour-item="item"
                 :heart-icon="activeFavoriteIcon[item.id] ? heartCircleOutline : heartOutline"
                 @add-to-favorites="addToFavoriteTours(item.id)" />
+          </router-link>
         </div>
     </ion-page>
 </template>
@@ -20,7 +22,7 @@ import { IonSearchbar, IonPage } from '@ionic/vue';
 import { onBeforeMount, onMounted, ref } from 'vue';
 import AddressCard from '@/components/Base/AddressCard.vue';
 import TourCard from '@/components/Base/TourCard.vue';
-import themes from '@/data/themeListData';
+import addresses from '@/data/addressListData';
 import tours from '@/data/tourListData'
 import { heartOutline, heartCircleOutline } from 'ionicons/icons';
 
@@ -119,9 +121,8 @@ ion-searchbar.home-page-search-bar {
 
     .home-page-tour-cards-item {
         flex: 0 0 auto;
-        margin-right: 10px;
         text-align: center;
-        padding: 4px;
+        padding: 4px 0px;
         /* height: 100px; */
     }
 }

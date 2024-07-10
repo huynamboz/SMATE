@@ -14,7 +14,7 @@
 import HeroCard from '@/components/Welcom/HeroCard.vue';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonButton, IonPage, IonRouterOutlet } from '@ionic/vue';
 import { computed, ref } from 'vue';
-import themes from "../data/themeListData"
+import themes from "../data/addressListData"
 
 const favoriteTheme = ref<number[]>([])
 

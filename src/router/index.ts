@@ -41,12 +41,12 @@ const routes: Array<RouteRecordRaw> = [
         path: 'favorites',
         component: () => import('@/views/FavoritesPage.vue')
       },
-      {
-        path: '/detail/:id',
-        component: HomePage
-      },
     ]
-  }
+  },
+  {
+    path: '/detail/:id',
+    component: () => import('@/views/_id/DetailPage.vue')
+  },
 ]
 
 const router = createRouter({
