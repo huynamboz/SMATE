@@ -1,44 +1,38 @@
 <template>
     <ion-card class="tour-card-container">
         <ion-card-header>
-            <img class="tour-card-image" src="https://cdn.pixabay.com/photo/2020/05/10/00/53/hue-city-5151869_1280.jpg"
+            <img class="tour-card-image" :src="tourItem.urlImage"
                 alt=""/>
         </ion-card-header>
         <ion-card-content class="tour-card-content">
             <div class="tour-card-infor">
-                <span class="tour-card-address">Huế</span>
+                <span class="tour-card-address">{{ tourItem.address }}</span>
                 <div>
-                    <p> 2 ngày 1 đêm</p>
-                    <p> 1000k/người</p>
+                    <p>{{ tourItem.time }}</p>
+                    <p>{{ tourItem.cost }}/người</p>
                 </div>
             </div>
-            <ion-icon :icon="heartOutline" size="large" @click.prevent="addFavoriteTour(id)"></ion-icon>
+            <ion-icon :icon="heartIcon" size="large" @click.prevent="$emit('addToFavorites', tourItem.id)"></ion-icon>
         </ion-card-content>
     </ion-card>
 </template>
 
-<script lang="ts">
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonImg } from '@ionic/vue';
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { IonCard, IonCardContent, IonCardHeader } from '@ionic/vue';
+import { defineEmits } from 'vue';
 import { IonIcon } from '@ionic/vue';
-import { heartOutline } from 'ionicons/icons';
 
-export default defineComponent({
-    components: { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon },
-    emits: ['addFavoriteTour'],
-    setup() {
-        return { heartOutline };
-    },
-});
+defineProps(['tourItem', 'heartIcon'])
+defineEmits(['addToFavorites'])
 </script>
 
 <style scoped scss>
+
 .tour-card-container {
     box-shadow: none;
     padding: 0;
     margin: 0;
     cursor: pointer;
-    
 }
 
 .tour-card-image {

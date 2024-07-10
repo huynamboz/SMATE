@@ -6,11 +6,11 @@
 </template>
 
 <script lang="ts">
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonImg } from '@ionic/vue';
+import { IonCard } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    components: { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle },
+    components: { IonCard },
     props: {
         addressCard: {
             type: Object,

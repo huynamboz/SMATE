@@ -14,15 +14,12 @@
             <ion-icon aria-hidden="true" :icon="addOutline" />
           </div>
         </ion-tab-button>
-        <ion-tab-button tab="tab2" href="/tabs/tab2">
+        <ion-tab-button tab="tab2" href="/tabs/favorites">
           <ion-icon aria-hidden="true" :icon="heart" />
         </ion-tab-button>
-
         <ion-tab-button tab="tab3" href="/tabs/tab3">
           <ion-icon aria-hidden="true" :icon="person" />
         </ion-tab-button>
-
-        
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
