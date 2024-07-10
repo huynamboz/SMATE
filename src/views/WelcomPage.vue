@@ -3,10 +3,10 @@
         <h1 class="welcom-page-welcom">Welcom</h1>
         <span class="welcom-page-content">CHỌN CHỦ ĐỀ BẠN YÊU THÍCH!</span>
         <div class="welcom-page-cards">
-            <hero-card v-for="item in data" :key="item.id" :hero-card="item" @click="addFavoritTheme(item.id)"
+            <hero-card v-for="item in themes" :key="item.id" :hero-card="item" @click="addFavoritTheme(item.id)"
                 :class="{ 'activeTheme': isFavoriteTheme(item.id) }" />
         </div>
-        <ion-button href="/home" color="#007AFF" expand="block" class="welcom-page-button">Tiếp tục</ion-button>
+        <ion-button href="tabs/home" color="#007AFF" expand="block" class="welcom-page-button">Tiếp tục</ion-button>
     </ion-page>
 </template>
 
@@ -14,57 +14,7 @@
 import HeroCard from '@/components/Welcom/HeroCard.vue';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonButton, IonPage, IonRouterOutlet } from '@ionic/vue';
 import { computed, ref } from 'vue';
-
-const data = ref([
-    {
-        id: 1,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    },
-    {
-        id: 2,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    },
-    {
-        id: 3,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    },
-    {
-        id: 12,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    }, {
-        id: 11,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    },
-    {
-        id: 14,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    }, {
-        id: 15,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    },
-    {
-        id: 16,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    }, {
-        id: 17,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    },
-    {
-        id: 18,
-        urlImage: "https://danatravel.vn/data/images/369906538_637609305177560_672558242768429966_n.jpg",
-        title: "Item 1"
-    },
-]
-)
+import themes from "../data/themeListData"
 
 const favoriteTheme = ref<number[]>([])
 
@@ -81,8 +31,8 @@ function addFavoritTheme(id: number) {
 </script>
 
 <style scoped scss>
-.welcom-page-container {
-    /* position: relative; */
+.ion-page {
+    justify-content: flex-start;
 }
 
 .welcom-page-welcom {
