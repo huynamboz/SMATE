@@ -48,6 +48,8 @@ export default defineComponent({
         font-size: 18px;
         font-weight: 600;
         z-index: 1;
+        width: 100%;
+        text-align: center;
     }
 }
 </style>

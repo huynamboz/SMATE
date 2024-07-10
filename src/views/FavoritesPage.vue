@@ -99,5 +99,9 @@ ion-searchbar.home-page-search-bar {
         padding: 4px;
         /* height: 100px; */
     }
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 </style>

@@ -36,6 +36,8 @@ defineEmits(['addToFavorites'])
 }
 
 .tour-card-image {
+    width: 100%;
+    height: 180px;
     border-radius: 16px;
     border: 1px solid #ebebeb;
 }

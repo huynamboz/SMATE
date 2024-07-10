@@ -3,7 +3,7 @@
         <ion-searchbar :debounce="500" color="#fff" class="home-page-search-bar"
             placeholder="Bạn muốn đi đâu?"></ion-searchbar>
         <div class="home-page-address-cards">
-            <address-card class="home-page-address-cards-item" v-for="item in themes" :key="item.id"
+            <address-card class="home-page-address-cards-item" v-for="item in addresses" :key="item.id"
                 :address-card="item" @click="chooseAdrress(item.title)" />
         </div>
         <div class="home-page-tour-cards">
@@ -20,7 +20,7 @@ import { IonSearchbar, IonPage } from '@ionic/vue';
 import { onBeforeMount, onMounted, ref } from 'vue';
 import AddressCard from '@/components/Base/AddressCard.vue';
 import TourCard from '@/components/Base/TourCard.vue';
-import themes from '@/data/themeListData';
+import addresses from '@/data/addressListData';
 import tours from '@/data/tourListData'
 import { heartOutline, heartCircleOutline } from 'ionicons/icons';
 
@@ -123,6 +123,10 @@ ion-searchbar.home-page-search-bar {
         text-align: center;
         padding: 4px;
         /* height: 100px; */
+    }
+
+    &::-webkit-scrollbar {
+        display: none;
     }
 }
 </style>
