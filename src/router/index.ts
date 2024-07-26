@@ -1,13 +1,20 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import TabsPage from '../views/TabsPage.vue'
-import WelcomPage from '@/views/WelcomPage.vue';
 import HomePage from '@/views/HomePage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: WelcomPage
+    component: () => import('@/views/preview/WelcomePage.vue')
+  },
+  {
+    path: '/type-travel',
+    component: () => import('@/views/preview/TypeTravelPage.vue')
+  },
+  {
+    path: '/age-range',
+    component: () => import('@/views/preview/AgeRangePage.vue')
   },
   {
     path: '/tabs/',
