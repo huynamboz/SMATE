@@ -34,6 +34,7 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import './assets/ionic.css'
+import './assets/css/main.css'
 const app = createApp(App)
   .use(IonicVue)
   .use(router);

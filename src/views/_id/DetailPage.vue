@@ -1,9 +1,9 @@
 <template>
   <ion-page>
     <div class="detail-wrapper" :style="{backgroundImage: `url(${detail.urlImage})`}">
-      <div class="btn-back" @click="onBack">
+      <RouterLink :to="{name: 'home'}" class="btn-back" @click="onBack">
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
-      </div>
+      </RouterLink>
       <button class="btn">Thay đổi timeline</button>
       <div class="detail-main">
 
@@ -67,7 +67,7 @@ import ExploreContainer from '@/components/ExploreContainer.vue';
 import { onBeforeMount, ref } from 'vue';
 const isFavorite = ref(false);
 
-import { useRouter } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 const router = useRouter();
 
 import { useRoute } from 'vue-router';
