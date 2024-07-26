@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* --p-primary-color: #007dfa !important; */
+  --color-secondary: #00ff00;
+  --p-button-border-radius: var(--p-border-radius-xl)!important;
+}
