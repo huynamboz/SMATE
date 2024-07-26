@@ -1,4 +1,3 @@
-
 const addresses = [
   {
       id: 1,

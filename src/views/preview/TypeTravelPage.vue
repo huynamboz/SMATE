@@ -1,20 +1,26 @@
 <template>
     <ion-page class="welcom-page-container">
-        <h1 class="welcom-page-welcom">Welcom</h1>
-        <span class="welcom-page-content">CHỌN CHỦ ĐỀ BẠN YÊU THÍCH!</span>
+        <h1 class="welcom-page-welcom">Welcome</h1>
+        <span class="welcom-page-content">BẠN MUỐN DU LỊCH CÙNG AI</span>
         <div class="welcom-page-cards">
-            <hero-card v-for="item in themes" :key="item.id" :hero-card="item" @click="addFavoritTheme(item.id)"
+            <hero-card v-for="item in typeTravel" :key="item.id" :hero-card="item" @click="addFavoritTheme(item.id)"
                 :class="{ 'activeTheme': isFavoriteTheme(item.id) }" />
         </div>
-        <ion-button href="tabs/home" color="#007AFF" expand="block" class="welcom-page-button">Tiếp tục</ion-button>
+        <div class="flex items-center justify-between welcom-page-button-group">
+            <ion-button href="/" color="#007AFF" expand="block" class="welcom-page-button text-[#007AFF]">Quay
+                lại</ion-button>
+            <ion-button href="age-range" color="#007AFF" expand="block"
+                class="welcom-page-button bg-[#007AFF] text-white">Tiếp
+                tục</ion-button>
+        </div>
     </ion-page>
 </template>
 
 <script setup lang="ts">
 import HeroCard from '@/components/Welcom/HeroCard.vue';
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonButton, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { computed, ref } from 'vue';
-import themes from "../data/addressListData"
+import { IonButton, IonPage } from '@ionic/vue';
+import { ref } from 'vue';
+import typeTravel from "@/data/typeTravelData"
 
 const favoriteTheme = ref<number[]>([])
 
@@ -45,7 +51,7 @@ function addFavoritTheme(id: number) {
 .welcom-page-content {
     font-size: 14px;
     font-weight: 400;
-    margin: auto;
+    margin: 20px auto;
     color: #007AFF;
     letter-spacing: 3px;
 }
@@ -69,16 +75,18 @@ function addFavoritTheme(id: number) {
     }
 }
 
-.welcom-page-button {
+.welcom-page-button-group {
     position: absolute;
-    left: 46%;
+    left: 50%;
     bottom: 20px;
-    transform: translate(-50%, 0);
-    width: calc(100% - 32px);
-    margin: 0 16px;
-    color: #fff;
-    height: 50px;
-    background-color: #007AFF;
-    border-radius: 8px;
+    transform: translate(-50%, 15%);
+    width: 100%;
+
+    .welcom-page-button {
+        width: calc(100% - 32px);
+        margin: 0 16px;
+        height: 50px;
+        border-radius: 8px;
+    }
 }
 </style>

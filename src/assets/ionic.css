@@ -19,3 +19,9 @@
 .button-solid {
   box-shadow: 1px 1px 20px 1px rgb(0 0 0 / 9%) !important;
 }
+
+.welcom-page-age-range-container {
+  .p-radiobutton {
+    display: none;
+  }
+}
