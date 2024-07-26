@@ -19,11 +19,11 @@
           src="https://images.unsplash.com/photo-1721715115717-8dfeea6bfb8a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           class="w-full h-full object-cover" />
       </div>
-      <div class="p-5 absolute w-full bottom-0 h-[80vh] z-10 overflow-hidden">
-        <div class="p-5 bg-white rounded-2xl">
+      <div class="p-5 absolute w-full bottom-0 h-[80vh] z-10">
+        <div class="p-5 bg-white rounded-2xl overflow-y-auto h-full">
           <div>
             <p>Tìm kiếm địa điểm</p>
-            <InputText class="w-full" type="text" v-model="destination" placeholder="Nhập địa điểm..." />
+            <InputText class="w-full mt-2" type="text" v-model="destination" placeholder="Nhập địa điểm..." />
           </div>
           <div class="mt-5">
             <div class="time-travel">
@@ -44,15 +44,14 @@
             </div>
 
             <!-- range -->
-            <!-- <div class="field">
-          <p>
-            Ngân sách
-          </p>
-          <ion-range :dual-knobs="true" :value="{ lower: 20, upper: 80 }">
-            <ion-label slot="start">500k</ion-label>
-            <ion-label slot="end">100.000k</ion-label>
-          </ion-range>
-        </div> -->
+            <div class="w-full mt-5">
+            <p>
+              Ngân sách: {{ formatNumber(budget[0]) }} - {{ formatNumber(budget[1]) }} VND
+            </p>
+            <div class="mt-5">
+              <Slider v-model="budget" range class="w-full" :min="0" :max="10000000"/>
+            </div>
+          </div>
 
             <div class="field customer">
               <p>
@@ -65,23 +64,13 @@
               </div>
             </div>
 
-            <div class="field">
-              <div class="row">
-
-                <div>
-                  <ion-input aria-label="Custom input" placeholder="Địa điểm muốn ghé" class="custom"></ion-input>
-                </div>
-              </div>
-              <div class="row" style="margin-top: 20px;">
-                <ion-select class="select-custom" placeholder="Chế độ tạo AI">
-                  <ion-select-option value="banana">Tạo timeline tổng quan</ion-select-option>
-                  <ion-select-option value="apple">Tạo timeline chi tiết</ion-select-option>
-                  <ion-select-option value="orange">Tạo timeline cực chi tiết (premium)</ion-select-option>
-                </ion-select>
-              </div>
+            <div class="mt-5">
+              <p>Địa điểm muốn ghé:</p>
+              <InputText class="w-full mt-2" type="text" v-model="desiredLocation" placeholder="vd: Sông Hương, kinh thành Huế" />
             </div>
-            <div class="field">
-              <ion-input aria-label="Custom input" placeholder="Yêu cầu đặc biệt" class="custom"></ion-input>
+            <div class="mt-5">
+              <p>Yêu cầu khác:</p>
+              <InputText class="w-full mt-2" type="text" v-model="desiredLocation" placeholder="Nhập yêu cầu khác" />
             </div>
 
             <div class="field">
@@ -96,35 +85,12 @@
   </ion-page>
 </template>
 
-<style>
-ion-input.custom {
-  --background: #ffffff;
-  --placeholder-color: #868686;
-  --placeholder-opacity: 0.8;
-
-  --padding-bottom: 10px;
-  --padding-end: 10px;
-  --padding-start: 10px;
-  --padding-top: 10px;
-  --border-color: #cbcbcb;
-  --border-style: solid;
-  --border-width: 1px;
-  border: 1px solid #cbcbcb;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-ion-input.custom.ios .input-bottom .helper-text,
-ion-input.custom.ios .input-bottom .counter,
-ion-input.custom.md .input-bottom .helper-text,
-ion-input.custom.md .input-bottom .counter {
-  color: #2b2b2d;
-}
-</style>
 <script setup lang="ts">
 import { IonPage, IonContent, IonRange, IonSelect, IonSelectOption } from '@ionic/vue';
 import InputText from 'primevue/inputtext';
 import DatePicker from 'primevue/datepicker';
+import Slider from 'primevue/slider';
+import { formatNumber } from '@/utils/price';
 import { addCircle, removeCircle } from 'ionicons/icons';
 import { ref } from 'vue';
 import { IonInput, IonLabel, IonIcon } from '@ionic/vue';
@@ -133,6 +99,8 @@ import Button from 'primevue/button';
 
 const startDate = ref(new Date());
 const endDate = ref(new Date());
+const budget = ref([500000, 5000000]);
+const desiredLocation = ref('');
 
 const destination = ref('');
 const customer = ref(1);

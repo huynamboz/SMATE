@@ -8,7 +8,7 @@ import { IonicVue } from '@ionic/vue';
 import '@ionic/vue/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-import '@ionic/vue/css/normalize.css';
+// import '@ionic/vue/css/normalize.css';
 import '@ionic/vue/css/structure.css';
 import '@ionic/vue/css/typography.css';
 
@@ -35,6 +35,7 @@ import '@ionic/vue/css/palettes/dark.system.css';
 import './theme/variables.css';
 import './assets/ionic.css'
 import './assets/css/main.css'
+import { MotionPlugin } from '@vueuse/motion'
 
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
@@ -42,10 +43,16 @@ import Aura from '@primevue/themes/aura';
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
-
+  app.use(MotionPlugin)
   app.use(PrimeVue, {
     theme: {
-        preset: Aura
+        preset: Aura,
+        options: {
+          cssLayer: {
+              name: 'primevue',
+              order: 'tailwind-base, primevue, tailwind-utilities'
+          }
+      }
     }
 });
 

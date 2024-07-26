@@ -5,7 +5,7 @@
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
       </RouterLink>
       <button class="btn">Thay đổi timeline</button>
-      <div class="detail-main">
+      <div class="detail-main py-20">
 
         <!-- header -->
         <div class="main-actions">
@@ -51,8 +51,9 @@
 
             <h2>Lịch trình</h2>
 
-            <span  style="white-space: pre-line" v-html="detail.timeLine">
-            </span>
+            <!-- <span  style="white-space: pre-line" v-html="detail.timeLine">
+            </span> -->
+            <VerticalTimeLine />
           </div>
         </div>
       </div>
@@ -65,6 +66,7 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
 import { location, shareSocial, analytics, heart, heartOutline, chevronBackOutline } from 'ionicons/icons';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 import { onBeforeMount, ref } from 'vue';
+import VerticalTimeLine from '@/components/Detail/VerticalTimeLine.vue';
 const isFavorite = ref(false);
 
 import { RouterLink, useRouter } from 'vue-router';
@@ -136,6 +138,7 @@ onBeforeMount(() => {
   background-color: #fff;
   position: relative;
   padding: 40px 26px;
+  padding-bottom: 100px;
 }
 .main-content {
   width: 100%;
