@@ -1,5 +1,5 @@
 <template>
-  <ion-button @click="openModal">Open Modal</ion-button>
+  <ion-button >Open Modal</ion-button>
 </template>
 <style scoped>
 
