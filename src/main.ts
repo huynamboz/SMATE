@@ -35,9 +35,19 @@ import '@ionic/vue/css/palettes/dark.system.css';
 import './theme/variables.css';
 import './assets/ionic.css'
 import './assets/css/main.css'
+
+import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
+
+  app.use(PrimeVue, {
+    theme: {
+        preset: Aura
+    }
+});
 
 router.isReady().then(() => {
   app.mount('#app');
