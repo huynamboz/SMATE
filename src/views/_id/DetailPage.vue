@@ -51,9 +51,8 @@
 
             <h2>Lịch trình</h2>
 
-            <p>
-              {{ detail.timeLine }}
-            </p>
+            <span  style="white-space: pre-line" v-html="detail.timeLine">
+            </span>
           </div>
         </div>
       </div>

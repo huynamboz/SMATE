@@ -12,10 +12,9 @@
         </ion-toolbar>
       </ion-header>
       <tour-card />
-      <hero-card />
       <!-- <ExploreContainer name="Tab 2 page" /> -->
-      <ion-button @click="openModal">Open Modal</ion-button>
-      <Button @click="openModal">Open Modal</Button>
+      <ion-button>Open Modal</ion-button>
+      <Button>Open Modal</Button>
     </ion-content>
   </ion-page>
 </template>
