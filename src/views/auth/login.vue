@@ -15,6 +15,7 @@ const password = ref('123456Aa');
 const handleLogin = async () => {
   console.log('Login');
   try {
+    loading.value = true;
     const data = await loginApi({
       email: email.value,
       password: password.value
@@ -28,8 +29,12 @@ const handleLogin = async () => {
     localStorage.setItem('token', data.access_token);
   } catch (error) {
     notify.error('Đăng nhập thất bại'); 
+  } finally {
+    loading.value = false;
   }
 };
+
+const loading = ref(false);
 </script>
 <template>
   <ion-page>
@@ -60,7 +65,7 @@ const handleLogin = async () => {
                 <InputText v-model="password" placeholder="******" />
               </InputGroup>
             </div>
-            <Button class="mt-10 h-14 w-full rounded-full" @click="handleLogin" label="Đăng nhập" />
+            <Button :loading="loading" class="mt-10 h-14 w-full rounded-full" @click="handleLogin" label="Đăng nhập" />
             <p class="text-center mt-5">Chưa có tài khoản?
               <router-link to="/auth/register" class=" text-blue-700">Đăng ký</router-link>
             </p>

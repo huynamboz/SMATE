@@ -14,7 +14,7 @@
       </div>
       <img class="h-full w-full object-cover" src="@/assets/img/bg1.avif" alt="">
     </div>
-    <div class="p-5 flex flex-col overflow-hidden">
+    <div v-else class="p-5 flex flex-col overflow-hidden">
       <div>
         <!-- user -->
          <p class="text-xl font-bold">Lịch trình đã tạo</p>
@@ -36,23 +36,33 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue
 import ExploreContainer from '@/components/ExploreContainer.vue';
 
 import Button from 'primevue/button';
-import { RouterLink } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
+import { computed, onMounted, ref, watch } from 'vue';
 import { getAllTimelines } from '@/services/timeline';
 import TourCard from '@/components/Base/TourCard.vue';
 const isLogged = ref(localStorage.getItem('token') ? true : false);
 const timelineList = ref<any[]>([])
-  async function getAllTimelinesData() {
-    try {
-        const data = await getAllTimelines()
-        console.log(data, 'hiiiiiiiiiiiiiiiii');
 
-        timelineList.value = data.data
-    } catch (error) {
-        console.log(error);
+const route = useRoute()
+const routeName = computed(() => route.name)
+
+watch(routeName, (val) => {  
+    if (val === 'profile') {
+      console.log('profile')
+      getAllTimelinesData()
+    isLogged.value = localStorage.getItem('token') ? true : false
     }
+})
+
+async function getAllTimelinesData() {
+  try {
+      const data = await getAllTimelines()
+      timelineList.value = data.data
+  } catch (error) {
+      console.log(error);
   }
-  onMounted(() => {
-    getAllTimelinesData()
-  })
+}
+onMounted(() => {
+  getAllTimelinesData()
+})
 </script>
