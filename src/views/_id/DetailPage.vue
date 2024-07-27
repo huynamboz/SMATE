@@ -4,21 +4,17 @@
       <RouterLink :to="{name: 'home'}" class="btn-back" @click="onBack">
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
       </RouterLink>
+      <div class="fixed bottom-5 left-0 z-10 w-full flex items-center gap-5 px-5">
+        <div class="flex items-center">
+          <div class="item bg-white" @click="isFavorite = !isFavorite">
+            <ion-icon :icon="isFavorite ? heart : heartOutline" style="font-size: 38px"></ion-icon>
+          </div>
+        </div>
       <button class="btn">Thay đổi timeline</button>
+      </div>
       <div class="detail-main py-20">
 
         <!-- header -->
-        <div class="main-actions">
-          <div class="item">
-            <ion-icon :icon="shareSocial" style="font-size: 26px"></ion-icon>
-          </div>
-          <div class="item">
-            <ion-icon :icon="analytics" style="font-size: 26px"></ion-icon>
-          </div>
-          <div class="item" @click="isFavorite = !isFavorite">
-            <ion-icon :icon="isFavorite ? heart : heartOutline" style="font-size: 26px"></ion-icon>
-          </div>
-        </div>
         <div class="main-title">
           <h1>{{ detail.title }}</h1>
           <div class="location">
@@ -30,21 +26,23 @@
         <!-- content -->
         <div class="main-content">
           <div class="content-infor">
-            <h2>Thông tin chung</h2>
-            <div v-html="detail.summaryInfor" class="summary"> 
+            <h2 class="text-2xl mb-1">Thông tin chung</h2>
+            <div class="summary"> 
+              <p >{{ 
+                isShowFullText ? detail.summaryInfor : detail.summaryInfor.slice(0, 80) + '...'
+                }}</p>
+              <button class=" text-blue-600" @click="isShowFullText = !isShowFullText">
+                {{isShowFullText ? 'Thu gọn' : 'Xem thêm'}}
+              </button>
             </div>
 
-            <div class="travel-infor">
-              <div class="item">
-                <p>Giá cả</p>
+            <div class="flex justify-around mt-5 mb-5">
+              <div class="flex flex-col items-center">
+                <p class=" font-bold">Giá cả</p>
                 <p>1500k/ người</p>
               </div>
-              <div class="item">
-                <p>Đánh giá</p>
-                <p>8.9/10</p>
-              </div>
-              <div class="item">
-                <p>Thời gian</p>
+              <div class="flex flex-col items-center">
+                <p class=" font-bold">Thời gian</p>
                 <p>24 giờ</p>
               </div>
             </div>
@@ -69,14 +67,16 @@ import { onBeforeMount, ref } from 'vue';
 import VerticalTimeLine from '@/components/Detail/VerticalTimeLine.vue';
 const isFavorite = ref(false);
 
-import { RouterLink, useRouter } from 'vue-router';
+import { RouterLink, useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 
-import { useRoute } from 'vue-router';
 const route = useRoute();
 const onBack = () => {
   router.push('/tabs/home')
 }
+
+const isShowFullText = ref(false);
+
 
 const detail = ref();
 const id = Number(route.params.id);
@@ -116,11 +116,7 @@ onBeforeMount(() => {
   border-radius: 10px;
   padding: 10px 20px;
   display: block;
-  width: 93%;
-  position: fixed;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
   text-align: center;
   height: 50px;
   cursor: pointer;
@@ -139,6 +135,7 @@ onBeforeMount(() => {
   position: relative;
   padding: 40px 26px;
   padding-bottom: 100px;
+  padding-top: 20px;
 }
 .main-content {
   width: 100%;

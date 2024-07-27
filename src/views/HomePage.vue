@@ -1,5 +1,5 @@
 <template>
-    <ion-page class="home-page-container">
+    <ion-page class="home-page-container bg-white">
         <ion-searchbar :debounce="500" color="#fff" class="home-page-search-bar"
             placeholder="Bạn muốn đi đâu?"></ion-searchbar>
         <div class="home-page-address-cards">
@@ -71,7 +71,7 @@ onBeforeMount(() => {
 }
 
 .home-page-container {
-    margin: 16px;
+    padding: 16px;
 }
 
 ion-searchbar.home-page-search-bar {
