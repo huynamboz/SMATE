@@ -29,7 +29,7 @@ export default defineComponent({
     width: 100%;
     border-radius: 16px;
     cursor: pointer;
-    border: 1px solid #ebebeb;
+    /* border: 1px solid #ebebeb; */
     cursor: pointer;
 
     .address-card-image {
