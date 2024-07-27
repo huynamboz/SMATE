@@ -14,7 +14,7 @@
     <div class="flex items-center justify-between welcom-page-age-range-button-group">
       <ion-button href="type-travel" color="#007AFF" expand="block" class="welcom-page-age-range-button text-[#007AFF]">Quay
         lại</ion-button>
-      <ion-button href="home" color="#007AFF" expand="block" class="welcom-page-age-range-button bg-[#007AFF] text-white">Tiếp
+      <ion-button href="/tabs/home" color="#007AFF" expand="block" class="welcom-page-age-range-button bg-[#007AFF] text-white">Tiếp
         tục</ion-button>
     </div>
   </ion-page>

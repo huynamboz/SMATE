@@ -2,10 +2,14 @@
     <ion-page class="home-page-container">
         <ion-searchbar :debounce="500" color="#fff" class="home-page-search-bar"
             placeholder="Bạn muốn đi đâu?"></ion-searchbar>
-        <div class="home-page-tour-cards">
+        <div v-if="favoriteToursList.length" class="home-page-tour-cards">
             <tour-card class="home-page-tour-cards-item" v-for="item in favoriteToursList" :key="item.id"
                 :heart-icon="activeFavoriteIcon[item.id] ? heartCircleOutline : heartOutline" :href="`detail/${item.id}`"
                 :tour-item="item" @add-to-favorites="addToFavoriteTours(item.id)" />
+        </div>
+        <div v-else class="text-center m-auto px-6">
+            <img src="//icons.veryicon.com/png/o/business/financial-category/no-data-6.png" class="opacity-50" alt="empty">
+            <span class="text-gray-500">Hãy thêm lịch trình yêu thích của bạn để có thể nhanh chóng trải nghiệm nhé!</span>
         </div>
     </ion-page>
 </template>
@@ -44,6 +48,7 @@ function addToFavoriteTours(id: number) {
 }
 
 onMounted(() => {
+    debugger
     const favoriteToursJson = localStorage.getItem("favoriteTours");
     if (favoriteToursJson !== null) {
         const tours = JSON.parse(favoriteToursJson);
