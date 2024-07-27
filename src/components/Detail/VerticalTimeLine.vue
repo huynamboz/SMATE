@@ -2,38 +2,43 @@
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import Checkbox from 'primevue/checkbox';
-const timelines = ref([
-  {
-    time: '10:00 Am',
-    title: 'Tham quan kinh thành Huế',
-    detail: 'Tham quan kinh thành Huế, điểm đến đầu tiên của chúng ta',
-    isDone: true
-  },
-  {
-    time: '11:00 Am',
-    title: 'Tham quan chùa Thiên Mụ',
-    detail: 'Tham quan chùa Thiên Mụ, điểm đến thứ 2 của chúng ta',
-    isDone: false
-  },
-  {
-    time: '12:00 Pm',
-    title: 'Tham quan đồi Vọng Cảnh',
-    detail: 'Tham quan đồi Vọng Cảnh, điểm đến thứ 3 của chúng ta',
-    isDone: false
-  },
-  {
-    time: '01:00 Pm',
-    title: 'Tham quan đồi Vọng Cảnh',
-    detail: 'Tham quan đồi Vọng Cảnh, điểm đến thứ 4 của chúng ta',
-    isDone: false
-  },
-  {
-    time: '02:00 Pm',
-    title: 'Tham quan đồi Vọng Cảnh',
-    detail: 'Tham quan đồi Vọng Cảnh, điểm đến thứ 5 của chúng ta',
-    isDone: false
-  },
-]);
+import type { Stop } from '@/views/_id/DetailPage.vue';
+
+defineProps({
+  timelines: Array as () => Stop[]
+})
+// const timelines = ref([
+//   {
+//     time: '10:00 Am',
+//     title: 'Tham quan kinh thành Huế',
+//     detail: 'Tham quan kinh thành Huế, điểm đến đầu tiên của chúng ta',
+//     isDone: true
+//   },
+//   {
+//     time: '11:00 Am',
+//     title: 'Tham quan chùa Thiên Mụ',
+//     detail: 'Tham quan chùa Thiên Mụ, điểm đến thứ 2 của chúng ta',
+//     isDone: false
+//   },
+//   {
+//     time: '12:00 Pm',
+//     title: 'Tham quan đồi Vọng Cảnh',
+//     detail: 'Tham quan đồi Vọng Cảnh, điểm đến thứ 3 của chúng ta',
+//     isDone: false
+//   },
+//   {
+//     time: '01:00 Pm',
+//     title: 'Tham quan đồi Vọng Cảnh',
+//     detail: 'Tham quan đồi Vọng Cảnh, điểm đến thứ 4 của chúng ta',
+//     isDone: false
+//   },
+//   {
+//     time: '02:00 Pm',
+//     title: 'Tham quan đồi Vọng Cảnh',
+//     detail: 'Tham quan đồi Vọng Cảnh, điểm đến thứ 5 của chúng ta',
+//     isDone: false
+//   },
+// ]);
 const router = useRouter()
 const route = useRoute()
 const goToAddressDetail = (id: number) => {
@@ -49,14 +54,14 @@ const goToAddressDetail = (id: number) => {
 <template>
   <div class="timeline-wrapper mt-5">
     <ul class="StepProgress">
-      <li v-for="(item, index) in timelines" :key="item.title" class="StepProgress-item" :class="{ 'is-done': item.isDone}">
-        <div class="bold time">{{ item.time }}</div>
-        <div class="bold" @click="goToAddressDetail(index)">{{ item.title }}</div>
-        <div>{{ item.detail }}</div>
-        <div class="flex items-center mt-1">
+      <li v-for="(item, index) in timelines" :key="item.name" class="StepProgress-item" :class="{ 'is-done': item?.isDone}">
+        <div class="bold time">{{ item.time_range }}</div>
+        <div class="bold" @click="goToAddressDetail(index)">{{ item.name }}</div>
+        <div>{{ item.activity }}</div>
+        <!-- <div class="flex items-center mt-1">
           <Checkbox v-model="timelines[index].isDone" size="small" inputId="ingredient1" name="pizza" :binary="true"/>
           <label for="ingredient1" class="ml-2"> Đã đi </label>
-      </div>
+        </div> -->
       </li>
     </ul>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <div class="detail-wrapper" :style="{backgroundImage: `url(${detail.urlImage})`}">
+    <div class="detail-wrapper" :style="{backgroundImage: `url(${detail?.urlImage})`}">
       <RouterLink :to="{name: 'home'}" class="btn-back" @click="onBack">
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
       </RouterLink>
@@ -16,10 +16,10 @@
 
         <!-- header -->
         <div class="main-title">
-          <h1>{{ detail.title }}</h1>
+          <h1>{{ detail?.title }}</h1>
           <div class="location">
             <ion-icon :icon="location" style="font-size: 20px"></ion-icon>
-            {{detail.address}}
+            {{detail?.address}}
           </div>
         </div>
 
@@ -29,7 +29,7 @@
             <h2 class="text-2xl mb-1">Thông tin chung</h2>
             <div class="summary"> 
               <p >{{ 
-                isShowFullText ? detail.summaryInfor : detail.summaryInfor.slice(0, 80) + '...'
+                isShowFullText ? detail?.description : detail?.description.slice(0, 80) + '...'
                 }}</p>
               <button class=" text-blue-600" @click="isShowFullText = !isShowFullText">
                 {{isShowFullText ? 'Thu gọn' : 'Xem thêm'}}
@@ -51,7 +51,7 @@
 
             <!-- <span  style="white-space: pre-line" v-html="detail.timeLine">
             </span> -->
-            <VerticalTimeLine />
+            <VerticalTimeLine :stop="stop"/>
           </div>
         </div>
       </div>
@@ -78,15 +78,82 @@ const onBack = () => {
 const isShowFullText = ref(false);
 
 
-const detail = ref();
-const id = Number(route.params.id);
+const detail = ref<Timeline>();
+const id = route.params.id;
 
 import tours from '@/data/tourListData';
+import { getTimeLine } from '@/services/timeline';
 
-onBeforeMount(() => {
-  detail.value = tours.find((item) => item.id === id);
+const fetchDetail = async () => {
+  const res = await getTimeLine(id);
+  detail.value = res.data;
+}
+onBeforeMount(async () => {
+  console.log(id);
+  await fetchDetail();
   console.log(detail.value, id);
 })
+
+export interface Timeline {
+  _id: string
+  user_id: UserId
+  description: string
+  stops: Stop[]
+  google_map_link: string
+  is_public: boolean
+  upvotes: number
+  downvotes: number
+  is_advertisement: boolean
+  created_at: string
+  updated_at: string
+  __v: number
+}
+
+export interface UserId {
+  _id: string
+  email: string
+}
+
+export interface Stop {
+  _id: string
+  place_id: string
+  name: string
+  activity: string
+  address: string
+  photos: Photo[]
+  phone: string
+  reviews: Review[]
+  rating?: number
+  time_range: string
+  website: string
+  google_map_link: string
+  opening_hours: string[]
+  date: string
+  created_at: string
+  updated_at: string
+  __v: number
+}
+
+export interface Photo {
+  height: number
+  html_attributions: string[]
+  photo_reference: string
+  width: number
+}
+
+export interface Review {
+  author_name: string
+  author_url: string
+  language: string
+  original_language: string
+  profile_photo_url: string
+  rating: number
+  relative_time_description: string
+  text: string
+  time: number
+  translated: boolean
+}
+
 </script>
 <style scoped>
 .detail-wrapper {
