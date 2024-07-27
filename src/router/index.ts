@@ -17,16 +17,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/preview/AgeRangePage.vue')
   },
   {
-    path: '/tabs',
+    path: '/tabs/',
     component: TabsPage,
     children: [
       {
         path: '',
-        redirect: '/tabs/tab1'
-      },
-      {
-        path: 'tab1',
-        component: () => import('@/views/Tab1Page.vue')
+        name: 'tabs',
+        redirect: '/tabs/home'
       },
       {
         path: 'tab2',
@@ -58,10 +55,12 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/auth/login',
+    name: 'login',
     component: () => import('@/views/auth/login.vue')
   },
   {
     path: '/auth/register',
+    name: 'register',
     component: () => import('@/views/auth/register.vue')
   },
   {

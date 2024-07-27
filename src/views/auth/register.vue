@@ -4,7 +4,19 @@ import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import Button from 'primevue/button';
 import { IonSearchbar, IonPage } from '@ionic/vue';
-
+import { notify } from '@/utils/toast';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+import { useIonRouter } from '@ionic/vue';
+const ionRouter = useIonRouter();
+const handleRegister = async () => {
+  console.log('Login');
+  notify.success('Đăng nhập thành công');
+  ionRouter.push({name: 'tabs'});
+  // await new Promise((resolve) => setTimeout(() => {
+  //   resolve(true);
+  // }, 1000));
+};
 </script>
 <template>
   <ion-page>
@@ -48,9 +60,10 @@ import { IonSearchbar, IonPage } from '@ionic/vue';
               </InputGroup>
             </div>
             
-            <Button class="mt-10 h-14 w-full rounded-full" label="Đăng ký" />
+            <Button @click="handleRegister" class="mt-10 h-14 w-full rounded-full" label="Đăng ký" />
+            <router-link :to="{name: 'tabs'}" class=" text-blue-700">Đăng nhập</router-link>
             <p class="text-center mt-5">Đã có tài khoản?
-              <router-link to="/auth/login" class=" text-blue-700">Đăng nhập</router-link>
+              <router-link :to="{name: 'login'}" class=" text-blue-700">Đăng nhập</router-link>
             </p>
           </div>
         </div>

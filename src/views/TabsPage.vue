@@ -2,7 +2,7 @@
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar v-if="route.name !== 'profile'" class="tabbar-custom" slot="bottom">
+      <ion-tab-bar class="tabbar-custom" slot="bottom">
         <ion-tab-button tab="tab1" href="/tabs/home">
           <ion-icon aria-hidden="true" :icon="home" />
         </ion-tab-button>
@@ -29,8 +29,9 @@
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
 import { ellipse, square, home, addOutline, analytics, heart, person } from 'ionicons/icons';
 import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 const route = useRoute();
+const routeName = computed(() => route.name)
 </script>
 
 <style>
