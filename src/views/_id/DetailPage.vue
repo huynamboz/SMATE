@@ -4,12 +4,14 @@
       <RouterLink :to="{ name: 'home' }" class="btn-back" @click="onBack">
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
       </RouterLink>
-      <div class="fixed bottom-5 left-0 z-10 w-full flex items-center gap-5 px-5">
-        <div class="flex items-center">
-          <div class="item bg-white" @click="isFavorite = !isFavorite">
-            <Icon :icon="isFavorite ? 'mdi:heart-circle-outline' : 'solar:heart-linear'" color="#007AFF"
-              style="font-size: 38px"></Icon>
-          </div>
+      <div class="fixed bottom-0 py-5 left-0 z-10 w-full flex items-center gap-5 px-5 bg-white">
+        <div class="flex gap-2 items-center min-w-[100px]">
+          <Icon class="text-2xl" color="#007aff" @click="handleVoteTimeline(EVote.UP)"
+            :icon="voteValue === EVote.UP ? 'solar:map-arrow-up-bold' : 'solar:map-arrow-up-linear'" />
+          <span class="text-lg">{{ (detail.upvotes - detail.downvotes) > 0 ? '+' : '' }} {{ detail.upvotes -
+            detail.downvotes }}</span>
+          <Icon class="text-2xl" color="#007aff" @click="handleVoteTimeline(EVote.DOWN)"
+            :icon="voteValue === EVote.DOWN ? 'solar:map-arrow-down-bold' : 'solar:map-arrow-down-linear'" />
         </div>
         <button class="btn">Thay đổi timeline</button>
       </div>
@@ -40,22 +42,35 @@
             <div class="flex justify-around mt-5 mb-5 px-4 py-2 bg-gray-100 rounded-2xl">
               <div class="flex flex-col items-center">
                 <p class=" font-bold">Kinh phí</p>
+<<<<<<< Updated upstream
                 <p>{{ detail?.budget }}</p>
+=======
+                <p>{{ getHalfBudget(detail.budget, detail.numberOfPeople) }} VNĐ/người</p>
+>>>>>>> Stashed changes
               </div>
               <div v-if="detail && detail.fromDate && detail.fromDate" class="flex flex-col items-center">
                 <p class=" font-bold">Thời gian</p>
+<<<<<<< Updated upstream
                 <p>{{ calculateDaysBetween(detail?.fromDate, detail?.toDate) }} ngày</p>
+=======
+                <p>{{ calculateDaysBetween(detail.fromDate, detail.toDate) + 1 }} ngày</p>
+>>>>>>> Stashed changes
               </div>
             </div>
 
             <h2>Lịch trình</h2>
             <Tabs value="0">
               <TabList>
-                <Tab v-for="tab in tabs" :key="tab.title" :value="tab.value">{{ tab.title }}</Tab>
+                <Tab v-for="(tab, index) in stopList" :key="index" :value="index.toString()">Ngày {{ index + 1 }}</Tab>
               </TabList>
               <TabPanels>
+<<<<<<< Updated upstream
                 <TabPanel v-for="tab in tabs" :key="tab.content" :value="tab.value">
                   <VerticalTimeLine v-if="detail?.stops" :timelines="detail.stops" />
+=======
+                <TabPanel v-for="(tab, index) in stopList" :key="index" :value="index.toString()">
+                  <VerticalTimeLine :timelines="tab" />
+>>>>>>> Stashed changes
                 </TabPanel>
               </TabPanels>
             </Tabs>
@@ -68,7 +83,7 @@
 
 <script setup lang="ts">
 import { IonPage, IonIcon } from '@ionic/vue';
-import { location, heart, heartOutline, chevronBackOutline } from 'ionicons/icons';
+import { location, chevronBackOutline } from 'ionicons/icons';
 import { onBeforeMount, ref } from 'vue';
 import { calculateDaysBetween } from '@/utils/time';
 import VerticalTimeLine from '@/components/Detail/VerticalTimeLine.vue';
@@ -77,7 +92,15 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
-const isFavorite = ref(false);
+import { splitArrayByTimeRange, getHalfBudget } from '@/utils/timeline';
+
+enum EVote {
+  UP = 'up',
+  DOWN = 'down',
+  UNVOTE = 'unvote'
+}
+const voteValue = ref<EVote>(EVote.UNVOTE);
+const stopList = ref<Stop[] | any[]>([]);
 
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -90,25 +113,41 @@ const route = useRoute();
 const onBack = () => {
   // router.push('/tabs/home')
 }
-
 const isShowFullText = ref(false);
-
 
 const detail = ref<Timeline>();
 const id = route.params.id;
 
-import { getImageFromDestination, getTimeLine } from '@/services/timeline';
+import { getImageFromDestination, getTimeLine, voteTimeline } from '@/services/timeline';
 
 const backgroundImage = ref<string>('');
 const fetchDetail = async () => {
   const res = await getTimeLine(String(id));
+  stopList.value = splitArrayByTimeRange(res.stops ?? []) ?? [];
   detail.value = res;
+
   if (!detail.value) return;
   await getImageFromDestination(detail.value.destination.split(' - ')[0]).then((url) => {
     console.log(url);
     // detail.value.urlImage = url;
     backgroundImage.value = url.results[0].urls.regular;
   });
+}
+async function handleVoteTimeline(vote: EVote) {
+  try {
+    voteValue.value = vote
+    if(detail?.value) {
+      if (vote === EVote.DOWN) {
+        detail.value.upvotes -= 1;
+      } else {
+        detail.value.upvotes += 1;
+      }
+    }
+    await voteTimeline(String(id), vote)
+  } catch (error) {
+    console.error(error);
+
+  }
 }
 
 onBeforeMount(async () => {

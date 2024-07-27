@@ -30,3 +30,12 @@ export const getImageFromDestination = async (destination: string) => {
     },
   });
 }
+
+export const voteTimeline = async (id: string, data: string) => {
+  return $http(`/timelines/${id}/vote`, {
+    method: 'POST',
+    body: {
+      vote: data,
+    },
+  });
+}
