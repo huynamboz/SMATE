@@ -15,6 +15,9 @@
   --p-button-border-radius: var(--p-border-radius-xl)!important;
 }
 
+input {
+  width: 100% !important;
+}
 .Toastify__toast-container {
   padding: 10px 40px !important;
 }

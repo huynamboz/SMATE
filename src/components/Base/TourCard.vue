@@ -31,8 +31,7 @@ defineEmits(['addToFavorites'])
 const imageUrl = ref<string>('')
 
 const getImage = async () => {
-    const url = await getImageFromDestination(prop.tourItem.destination.split('-')[0]?.trim())
-    console.log("hehe",url)
+    const url = await getImageFromDestination(prop.tourItem.destination.split(' - ')[0]?.trim())
     imageUrl.value = url.results[0].urls.regular
 }
 

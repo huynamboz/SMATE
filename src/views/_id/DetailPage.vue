@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <div v-if="detail" class="detail-wrapper" :style="{ backgroundImage: `url(${backgroundImage})` }">
+    <div class="detail-wrapper" :style="{ backgroundImage: `url(${backgroundImage})` }">
       <RouterLink :to="{ name: 'home' }" class="btn-back" @click="onBack">
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
       </RouterLink>
@@ -40,11 +40,11 @@
             <div class="flex justify-around mt-5 mb-5 px-4 py-2 bg-gray-100 rounded-2xl">
               <div class="flex flex-col items-center">
                 <p class=" font-bold">Kinh phí</p>
-                <p>{{ detail.budget }}</p>
+                <p>{{ detail?.budget }}</p>
               </div>
-              <div class="flex flex-col items-center">
+              <div v-if="detail && detail.fromDate && detail.fromDate" class="flex flex-col items-center">
                 <p class=" font-bold">Thời gian</p>
-                <p>{{ calculateDaysBetween(detail.fromDate, detail.toDate) }} ngày</p>
+                <p>{{ calculateDaysBetween(detail?.fromDate, detail?.toDate) }} ngày</p>
               </div>
             </div>
 
@@ -55,7 +55,7 @@
               </TabList>
               <TabPanels>
                 <TabPanel v-for="tab in tabs" :key="tab.content" :value="tab.value">
-                  <VerticalTimeLine :timelines="detail.stops" />
+                  <VerticalTimeLine v-if="detail?.stops" :timelines="detail.stops" />
                 </TabPanel>
               </TabPanels>
             </Tabs>
@@ -104,7 +104,7 @@ const fetchDetail = async () => {
   const res = await getTimeLine(String(id));
   detail.value = res;
   if (!detail.value) return;
-  await getImageFromDestination(detail.value.destination).then((url) => {
+  await getImageFromDestination(detail.value.destination.split(' - ')[0]).then((url) => {
     console.log(url);
     // detail.value.urlImage = url;
     backgroundImage.value = url.results[0].urls.regular;
