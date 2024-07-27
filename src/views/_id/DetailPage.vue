@@ -8,8 +8,8 @@
         <div class="flex gap-2 items-center min-w-[100px]">
           <Icon class="text-2xl" color="#007aff" @click="handleVoteTimeline(EVote.UP)"
             :icon="voteValue === EVote.UP ? 'solar:map-arrow-up-bold' : 'solar:map-arrow-up-linear'" />
-          <span class="text-lg">{{ (detail.upvotes - detail.downvotes) > 0 ? '+' : '' }} {{ detail.upvotes -
-            detail.downvotes }}</span>
+            <span class="text-lg">{{ (detail?.upvotes ?? 0 - (detail?.downvotes ?? 0)) > 0 ? '+' : '' }} {{ detail?.upvotes ?? 0 -
+            (detail?.downvotes ?? 0) }}</span>
           <Icon class="text-2xl" color="#007aff" @click="handleVoteTimeline(EVote.DOWN)"
             :icon="voteValue === EVote.DOWN ? 'solar:map-arrow-down-bold' : 'solar:map-arrow-down-linear'" />
         </div>
@@ -42,19 +42,11 @@
             <div class="flex justify-around mt-5 mb-5 px-4 py-2 bg-gray-100 rounded-2xl">
               <div class="flex flex-col items-center">
                 <p class=" font-bold">Kinh phí</p>
-<<<<<<< Updated upstream
-                <p>{{ detail?.budget }}</p>
-=======
-                <p>{{ getHalfBudget(detail.budget, detail.numberOfPeople) }} VNĐ/người</p>
->>>>>>> Stashed changes
+                <p>{{ getHalfBudget(detail?.budget ?? '', detail?.numberOfPeople ?? 1) }} VNĐ/người</p>
               </div>
               <div v-if="detail && detail.fromDate && detail.fromDate" class="flex flex-col items-center">
                 <p class=" font-bold">Thời gian</p>
-<<<<<<< Updated upstream
-                <p>{{ calculateDaysBetween(detail?.fromDate, detail?.toDate) }} ngày</p>
-=======
                 <p>{{ calculateDaysBetween(detail.fromDate, detail.toDate) + 1 }} ngày</p>
->>>>>>> Stashed changes
               </div>
             </div>
 
@@ -64,13 +56,8 @@
                 <Tab v-for="(tab, index) in stopList" :key="index" :value="index.toString()">Ngày {{ index + 1 }}</Tab>
               </TabList>
               <TabPanels>
-<<<<<<< Updated upstream
-                <TabPanel v-for="tab in tabs" :key="tab.content" :value="tab.value">
-                  <VerticalTimeLine v-if="detail?.stops" :timelines="detail.stops" />
-=======
                 <TabPanel v-for="(tab, index) in stopList" :key="index" :value="index.toString()">
                   <VerticalTimeLine :timelines="tab" />
->>>>>>> Stashed changes
                 </TabPanel>
               </TabPanels>
             </Tabs>

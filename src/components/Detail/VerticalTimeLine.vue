@@ -59,10 +59,6 @@ const goToAddressDetail = (index: number, item: Stop) => {
         <div class="bold time w-[64px] -top-4">{{ item.time_range.split(" - ").join("\n") }}</div>
         <div class="bold" @click="goToAddressDetail(index, item)">{{ item.name }}</div>
         <div>{{ item.activity }}</div>
-        <!-- <div class="flex items-center mt-1">
-          <Checkbox v-model="timelines[index].isDone" size="small" inputId="ingredient1" name="pizza" :binary="true"/>
-          <label for="ingredient1" class="ml-2"> Đã đi </label>
-        </div> -->
       </li>
     </ul>
   </div>
