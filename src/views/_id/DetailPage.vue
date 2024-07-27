@@ -67,12 +67,12 @@ import { onBeforeMount, ref } from 'vue';
 import VerticalTimeLine from '@/components/Detail/VerticalTimeLine.vue';
 const isFavorite = ref(false);
 
-import { RouterLink, useRouter, useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 
 const route = useRoute();
 const onBack = () => {
-  router.push('/tabs/home')
+  // router.push('/tabs/home')
 }
 
 const isShowFullText = ref(false);

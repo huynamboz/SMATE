@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/preview/AgeRangePage.vue')
   },
   {
-    path: '/tabs/',
+    path: '/tabs',
     component: TabsPage,
     children: [
       {
@@ -34,6 +34,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'tab3',
+        name: 'profile',
         component: () => import('@/views/Tab3Page.vue')
       },
       {
@@ -58,6 +59,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/auth/login',
     component: () => import('@/views/auth/login.vue')
+  },
+  {
+    path: '/auth/register',
+    component: () => import('@/views/auth/register.vue')
   },
   {
     path: '/detail/:id/address/:addressId',
