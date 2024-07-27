@@ -1,25 +1,26 @@
 <template>
   <ion-page>
-    <div v-if="detail" class="detail-wrapper" :style="{backgroundImage: `url(${backgroundImage})`}">
-      <RouterLink :to="{name: 'home'}" class="btn-back" @click="onBack">
+    <div v-if="detail" class="detail-wrapper" :style="{ backgroundImage: `url(${backgroundImage})` }">
+      <RouterLink :to="{ name: 'home' }" class="btn-back" @click="onBack">
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
       </RouterLink>
       <div class="fixed bottom-5 left-0 z-10 w-full flex items-center gap-5 px-5">
         <div class="flex items-center">
           <div class="item bg-white" @click="isFavorite = !isFavorite">
-            <ion-icon :icon="isFavorite ? heart : heartOutline" style="font-size: 38px"></ion-icon>
+            <Icon :icon="isFavorite ? 'mdi:heart-circle-outline' : 'solar:heart-linear'" color="#007AFF"
+              style="font-size: 38px"></Icon>
           </div>
         </div>
-      <button class="btn">Thay đổi timeline</button>
+        <button class="btn">Thay đổi timeline</button>
       </div>
       <div class="detail-main py-20">
 
         <!-- header -->
         <div class="main-title">
-          <h1>{{ detail?.title }}</h1>
+          <!-- <h1>{{ detail?.title }}</h1> -->
           <div class="location">
             <ion-icon :icon="location" style="font-size: 20px"></ion-icon>
-            {{detail?.destination}}
+            {{ detail?.destination }}
           </div>
         </div>
 
@@ -27,32 +28,38 @@
         <div class="main-content">
           <div class="content-infor">
             <h2 class="text-2xl mb-1">Thông tin chung</h2>
-            <div class="summary"> 
-              <p >{{ 
+            <div class="summary">
+              <p>{{
                 isShowFullText ? detail?.description : detail?.description.slice(0, 80) + '...'
-                }}</p>
+              }}</p>
               <button class=" text-blue-600" @click="isShowFullText = !isShowFullText">
-                {{isShowFullText ? 'Thu gọn' : 'Xem thêm'}}
+                {{ isShowFullText ? 'Thu gọn' : 'Xem thêm' }}
               </button>
             </div>
 
-            <div class="flex justify-around mt-5 mb-5">
+            <div class="flex justify-around mt-5 mb-5 px-4 py-2 bg-gray-100 rounded-2xl">
               <div class="flex flex-col items-center">
                 <p class=" font-bold">Kinh phí</p>
                 <p>{{ detail.budget }}</p>
               </div>
               <div class="flex flex-col items-center">
                 <p class=" font-bold">Thời gian</p>
-                <p>24 giờ</p>
+                <p>2 ngày</p>
               </div>
             </div>
 
             <h2>Lịch trình</h2>
-
-            <!-- <span  style="white-space: pre-line" v-html="detail.timeLine">
-            </span> -->
-            <img v-image="backgroundImage" alt="">
-            <VerticalTimeLine :timelines="detail.stops"/>
+            <Tabs value="0">
+              <TabList>
+                <Tab v-for="tab in tabs" :key="tab.title" :value="tab.value">{{ tab.title }}</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel v-for="tab in tabs" :key="tab.content" :value="tab.value">
+                  <img v-image="backgroundImage" alt="">
+                  <VerticalTimeLine :timelines="detail.stops" />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
           </div>
         </div>
       </div>
@@ -61,16 +68,24 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
-import { location, shareSocial, analytics, heart, heartOutline, chevronBackOutline } from 'ionicons/icons';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import { IonPage, IonIcon } from '@ionic/vue';
+import { location, heart, heartOutline, chevronBackOutline } from 'ionicons/icons';
 import { onBeforeMount, ref } from 'vue';
 import VerticalTimeLine from '@/components/Detail/VerticalTimeLine.vue';
+import Tabs from 'primevue/tabs';
+import TabList from 'primevue/tablist';
+import Tab from 'primevue/tab';
+import TabPanels from 'primevue/tabpanels';
+import TabPanel from 'primevue/tabpanel';
 const isFavorite = ref(false);
 
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
-
+const tabs = ref([
+  { title: 'Ngày 1', content: 'Ngày 1 Content', value: '0' },
+  { title: 'Ngày 2', content: 'Ngày 2 Content', value: '1' },
+  { title: 'Ngày 3', content: 'Ngày 3 Content', value: '2' }
+]);
 const route = useRoute();
 const onBack = () => {
   // router.push('/tabs/home')
@@ -156,6 +171,7 @@ export interface Stop {
   overflow-y: auto;
   background-image: url('https://vanhoadoisong.vn/wp-content/uploads/2022/05/50-hinh-nen-anh-ve-hue-mong-mo-dep-nhat-cho-dien-thoai-may-tinh-10.jpg');
 }
+
 .btn-back {
   position: fixed;
   top: 20px;
@@ -197,6 +213,7 @@ export interface Stop {
   padding-bottom: 100px;
   padding-top: 20px;
 }
+
 .main-content {
   width: 100%;
   height: 100%;
@@ -253,9 +270,11 @@ export interface Stop {
   justify-content: space-between;
   margin: 20px 0;
 }
+
 .travel-infor .item {
   text-align: center;
 }
+
 .travel-infor .item p:nth-child(1) {
   color: #c6c6c6;
 }

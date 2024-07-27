@@ -133,7 +133,7 @@ const goToAddressDetail = (id: number) => {
 }
 
 .StepProgress-item.is-done::before {
-  border-left: 2px solid green;
+  border-left: 2px solid #007AFF;
 }
 
 .StepProgress-item.is-done::after {
@@ -141,8 +141,8 @@ const goToAddressDetail = (id: number) => {
   font-size: 10px;
   color: #FFF;
   text-align: center;
-  border: 2px solid green;
-  background-color: green;
+  border: 2px solid #007AFF;
+  background-color: #007AFF;
 }
 
 /*.StepProgress-item.current::before { 

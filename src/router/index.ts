@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import TabsPage from '../views/TabsPage.vue'
-import HomePage from '@/views/HomePage.vue';
+import TabsPage from '../views/TabsPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +35,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'create',
+        name: 'create',
         component: () => import('@/views/create/Create.vue')
       },
       {
@@ -45,6 +45,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'favorites',
+        name: 'favorites',
         component: () => import('@/views/FavoritesPage.vue')
       },
     ]
