@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { chevronBackOutline } from 'ionicons/icons';
 import Carousel from 'primevue/carousel';
 import { ref } from "vue";
@@ -127,10 +127,10 @@ const responsiveOptions = ref([
     numScroll: 1
   }
 ]);
-
+const route = useRoute();
 const router = useRouter();
 const onBack = () => {
-  router.go(-1)
+  router.push(`/detail/${route.params.id}`)
 }
 const reviews = [
   {
