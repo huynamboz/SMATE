@@ -1,9 +1,9 @@
 <template>
     <ion-card class="tour-card-container">
-        <ion-card-header>
-            <img class="tour-card-image" :src="tourItem.urlImage"
+        <!-- <ion-card-header> -->
+            <img class="w-full h-[200px] rounded-lg object-cover" :src="tourItem.urlImage"
                 alt=""/>
-        </ion-card-header>
+        <!-- </ion-card-header> -->
         <ion-card-content class="tour-card-content">
             <div class="tour-card-infor">
                 <span class="tour-card-address">{{ tourItem.address }}</span>

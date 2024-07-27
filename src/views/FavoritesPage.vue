@@ -48,7 +48,6 @@ function addToFavoriteTours(id: number) {
 }
 
 onMounted(() => {
-    debugger
     const favoriteToursJson = localStorage.getItem("favoriteTours");
     if (favoriteToursJson !== null) {
         const tours = JSON.parse(favoriteToursJson);
