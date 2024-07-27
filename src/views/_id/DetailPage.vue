@@ -13,7 +13,7 @@
           <Icon class="text-2xl" color="#007aff" @click="handleVoteTimeline(EVote.DOWN)"
             :icon="voteValue === EVote.DOWN ? 'solar:map-arrow-down-bold' : 'solar:map-arrow-down-linear'" />
         </div>
-        <button class="btn">Thay đổi timeline</button>
+        <a :href="detail?.google_map_link" class="btn">Đi đến Google Map</a>
       </div>
       <div class="detail-main py-20">
 
@@ -228,9 +228,9 @@ export interface Stop {
 }
 
 .detail-main {
-  height: 70vh;
+  height: 80vh;
   width: 100%;
-  margin-top: 400px;
+  margin-top: 300px;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
   background-color: #fff;
