@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import Checkbox from 'primevue/checkbox';
 const timelines = ref([
   {
@@ -33,13 +34,24 @@ const timelines = ref([
     isDone: false
   },
 ]);
+const router = useRouter()
+const route = useRoute()
+const goToAddressDetail = (id: number) => {
+  router.push({
+    name: 'address-detail',
+    params: {
+      id: route.params.id,
+      addressId: id
+    }
+  });
+}
 </script>
 <template>
   <div class="timeline-wrapper mt-5">
     <ul class="StepProgress">
       <li v-for="(item, index) in timelines" :key="item.title" class="StepProgress-item" :class="{ 'is-done': item.isDone}">
         <div class="bold time">{{ item.time }}</div>
-        <div class="bold">{{ item.title }}</div>
+        <div class="bold" @click="goToAddressDetail(index)">{{ item.title }}</div>
         <div>{{ item.detail }}</div>
         <div class="flex items-center mt-1">
           <Checkbox v-model="timelines[index].isDone" size="small" inputId="ingredient1" name="pizza" :binary="true"/>
