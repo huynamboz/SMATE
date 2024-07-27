@@ -10,8 +10,8 @@ import '@ionic/vue/css/core.css';
 /* Basic CSS for apps built with Ionic */
 // import '@ionic/vue/css/normalize.css';
 import '@ionic/vue/css/structure.css';
-import '@ionic/vue/css/typography.css';
-
+// import '@ionic/vue/css/typography.css';
+import { Icon } from '@iconify/vue';
 /* Optional CSS utils that can be commented out */
 import '@ionic/vue/css/padding.css';
 import '@ionic/vue/css/float-elements.css';
@@ -39,14 +39,32 @@ import { MotionPlugin } from '@vueuse/motion'
 
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
-
+import { definePreset } from '@primevue/themes';
+const MyPreset = definePreset(Aura, {
+  semantic: {
+      primary: {
+          50: '{blue.50}',
+          100: '{blue.100}',
+          200: '{blue.200}',
+          300: '{blue.300}',
+          400: '{blue.400}',
+          500: '{blue.500}',
+          600: '{blue.600}',
+          700: '{blue.700}',
+          800: '{blue.800}',
+          900: '{blue.900}',
+          950: '{blue.950}'
+      }
+  }
+});
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
+  app.component('Icon', Icon)
   app.use(MotionPlugin)
   app.use(PrimeVue, {
     theme: {
-        preset: Aura,
+        preset: MyPreset,
         options: {
           cssLayer: {
               name: 'primevue',
