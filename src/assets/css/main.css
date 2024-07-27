@@ -11,6 +11,6 @@
 
 :root {
   /* --p-primary-color: #007dfa !important; */
-  --color-secondary: #00ff00;
+  --color-secondary: #007aff;
   --p-button-border-radius: var(--p-border-radius-xl)!important;
 }

@@ -7,12 +7,12 @@
                 :address-card="item" @click="chooseAdrress(item.title)" />
         </div>
         <div class="home-page-tour-cards">
-          <router-link  class="home-page-tour-cards-item" v-for="item in tours" :key="item.id" :to="`/detail/${item.id}`">
-            <tour-card
-                :tour-item="item"
-                :heart-icon="activeFavoriteIcon[item.id] ? heartCircleOutline : heartOutline"
-                @add-to-favorites="addToFavoriteTours(item.id)" />
-          </router-link>
+            <router-link class="home-page-tour-cards-item" v-for="item in tours" :key="item.id"
+                :to="`/detail/${item.id}`">
+                <tour-card :tour-item="item"
+                    :heart-icon="activeFavoriteIcon[item.id] ? heartCircleOutline : heartOutline"
+                    @add-to-favorites="addToFavoriteTours(item.id)" />
+            </router-link>
         </div>
     </ion-page>
 </template>
@@ -36,7 +36,7 @@ function chooseAdrress(title: string) {
 }
 
 function filterActiveFavoriteTour() {
-    favoriteTours.value.forEach(item => activeFavoriteIcon.value[item] = true )
+    favoriteTours.value.forEach(item => activeFavoriteIcon.value[item] = true)
     console.log(activeFavoriteIcon.value);
 }
 
