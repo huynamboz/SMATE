@@ -11,15 +11,14 @@
                 :address-card="item" @click="chooseAdrress(item.title)" />
         </div>
         <div class="home-page-tour-cards">
-          <div class="home-page-tour-cards-item"
-               >
+            <div class="home-page-tour-cards-item">
                 <img class="rounded-md" src="/ads.jpg" alt="">
             </div>
-            <router-link class="home-page-tour-cards-item" v-for="item in timelineList" :key="item._id"
+            <router-link class="home-page-tour-cards-item" v-for="(item, index) in timelineList" :key="item._id"
                 :to="`/detail/${item._id}`">
                 <tour-card :tour-item="item"
-                    :heart-icon="!activeFavoriteIcon[item._id] ? 'solar:heart-linear' : 'mdi:heart-circle-outline'"
-                    @add-to-favorites="addToFavoriteTours(item.id)" />
+                    :heart-icon="!activeFavoriteIcon[index] ? 'solar:heart-linear' : 'mdi:heart-circle-outline'"
+                    @add-to-favorites="addToFavoriteTours(index)" />
             </router-link>
         </div>
     </ion-page>
@@ -36,6 +35,7 @@ import InputGroup from 'primevue/inputgroup';
 import InputText from 'primevue/inputtext';
 import { useRoute } from 'vue-router';
 import { getAllTimelines } from '@/services/timeline';
+import { Timeline } from './_id/DetailPage.vue';
 
 const route = useRoute()
 const address = ref<string>('')
@@ -43,7 +43,7 @@ const favoriteTours = ref<any[]>([])
 const activeId = ref<number>(1)
 const activeFavoriteIcon = ref<boolean[]>([])
 const searchValue = ref<string>('')
-const timelineList = ref<any[]>([])
+const timelineList = ref<Timeline[]>([])
 
 function chooseAdrress(title: string) {
     address.value = title

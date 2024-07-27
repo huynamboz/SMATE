@@ -113,7 +113,7 @@ const goToAddressDetail = (index: number, item: Stop) => {
   position: absolute;
   left: -32px;
   height: 100%;
-  min-height: 50px;
+  min-height: 70px;
   width: 10px;
 }
 

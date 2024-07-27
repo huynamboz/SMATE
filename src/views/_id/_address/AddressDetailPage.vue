@@ -79,7 +79,6 @@ import type { Stop } from '../DetailPage.vue';
 const vungTauImages = [
   "https://sodl.baria-vungtau.gov.vn/portal/widget/widget_133366762102229738.jpg",
   "https://charmlonghai.vn/upload/media/bariavungtauthuchiendongbonhieugiaiphapphattrien-1304.jpg",
-  "https://www.google.com/url?sa=i&url=https%3A%2F%2Fhieutour.com.vn%2Fcan-tho-vung-tau-2-ngay-1-dem&psig=AOvVaw1ntDgdvSCeBnMxOwO8ENmf&ust=1722134457114000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCKCX0PaYxocDFQAAAAAdAAAAABAf",
   "https://cdn3.ivivu.com/2014/10/Du-lich-vung-tau-cam-nang-tu-a-den-z-iVIVU.com-1-370x215.jpg",
   "https://sodl.baria-vungtau.gov.vn/portal/widget/widget_133366762102229738.jpg",
   "https://charmlonghai.vn/upload/media/bariavungtauthuchiendongbonhieugiaiphapphattrien-1304.jpg",
