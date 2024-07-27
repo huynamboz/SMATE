@@ -61,6 +61,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/detail/:id/address/:addressId',
+    name: 'address-detail',
     component: () => import('@/views/_id/_address/AddressDetailPage.vue')
   },
 ]
