@@ -44,7 +44,7 @@
               </div>
               <div class="flex flex-col items-center">
                 <p class=" font-bold">Thời gian</p>
-                <p>2 ngày</p>
+                <p>{{ calculateDaysBetween(detail.fromDate, detail.toDate) }} ngày</p>
               </div>
             </div>
 
@@ -55,7 +55,6 @@
               </TabList>
               <TabPanels>
                 <TabPanel v-for="tab in tabs" :key="tab.content" :value="tab.value">
-                  <img v-image="backgroundImage" alt="">
                   <VerticalTimeLine :timelines="detail.stops" />
                 </TabPanel>
               </TabPanels>
@@ -71,6 +70,7 @@
 import { IonPage, IonIcon } from '@ionic/vue';
 import { location, heart, heartOutline, chevronBackOutline } from 'ionicons/icons';
 import { onBeforeMount, ref } from 'vue';
+import { calculateDaysBetween } from '@/utils/time';
 import VerticalTimeLine from '@/components/Detail/VerticalTimeLine.vue';
 import Tabs from 'primevue/tabs';
 import TabList from 'primevue/tablist';
@@ -97,13 +97,13 @@ const isShowFullText = ref(false);
 const detail = ref<Timeline>();
 const id = route.params.id;
 
-import tours from '@/data/tourListData';
 import { getImageFromDestination, getTimeLine } from '@/services/timeline';
 
 const backgroundImage = ref<string>('');
 const fetchDetail = async () => {
-  const res = await getTimeLine(id);
+  const res = await getTimeLine(String(id));
   detail.value = res;
+  if (!detail.value) return;
   await getImageFromDestination(detail.value.destination).then((url) => {
     console.log(url);
     // detail.value.urlImage = url;
@@ -222,7 +222,7 @@ export interface Stop {
 
 .main-title {
   position: absolute;
-  top: -120px;
+  top: -36px;
   font-size: 12px;
   color: #fff;
 }
