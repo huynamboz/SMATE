@@ -49,7 +49,7 @@
               Ngân sách: {{ formatNumber(budget[0]) }} - {{ formatNumber(budget[1]) }} VND
             </p>
             <div class="mt-5">
-              <Slider v-model="budget" range class="w-full" :min="0" :max="10000000"/>
+              <Slider :step="100000" v-model="budget" range class="w-full" :min="0" :max="100000000"/>
             </div>
           </div>
 
