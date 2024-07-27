@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import Checkbox from 'primevue/checkbox';
-import type { Stop } from '@/views/_id/DetailPage.vue';
+import type { Stop, Timeline } from '@/views/_id/DetailPage.vue';
 
 defineProps({
   timelines: Array as () => Stop[]
@@ -41,12 +41,13 @@ defineProps({
 // ]);
 const router = useRouter()
 const route = useRoute()
-const goToAddressDetail = (id: number) => {
+const goToAddressDetail = (index: number, item: Stop) => {
+  localStorage.setItem('addressReview', JSON.stringify(item));
   router.push({
     name: 'address-detail',
     params: {
       id: route.params.id,
-      addressId: id
+      addressId: index
     }
   });
 }
@@ -56,7 +57,7 @@ const goToAddressDetail = (id: number) => {
     <ul class="StepProgress">
       <li v-for="(item, index) in timelines" :key="item.name" class="StepProgress-item">
         <div class="bold time w-[64px] -top-4">{{ item.time_range.split(" - ").join("\n") }}</div>
-        <div class="bold" @click="goToAddressDetail(index)">{{ item.name }}</div>
+        <div class="bold" @click="goToAddressDetail(index, item)">{{ item.name }}</div>
         <div>{{ item.activity }}</div>
         <!-- <div class="flex items-center mt-1">
           <Checkbox v-model="timelines[index].isDone" size="small" inputId="ingredient1" name="pizza" :binary="true"/>
@@ -116,6 +117,7 @@ const goToAddressDetail = (id: number) => {
   position: absolute;
   left: -32px;
   height: 100%;
+  min-height: 50px;
   width: 10px;
 }
 

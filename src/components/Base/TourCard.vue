@@ -11,7 +11,7 @@
                     <p class="tour-card-address w-auto min-w-[90px]">{{ getTextBeforeDash(tourItem.destination) }}</p>
                 </div>
                 <div class="min-w-[140px]">
-                    <p>{{ `${getDaysDifference(tourItem.fromDate, tourItem.toDate) + 1} ngày ${getDaysDifference(tourItem.fromDate, tourItem.toDate)} đêm ` }}</p>
+                    <p>{{ `${getDaysDifference(tourItem.fromDate, tourItem.toDate) + 1} ngày ${getDaysDifference(tourItem.fromDate, tourItem.toDate) > 0 ? getDaysDifference(tourItem.fromDate, tourItem.toDate) + 'đêm' : ''} ` }}</p>
                     <p>{{ getHalfBudget(tourItem.budget, tourItem.numberOfPeople) }} VNĐ/người</p>
                 </div>
             </div>
