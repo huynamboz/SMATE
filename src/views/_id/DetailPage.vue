@@ -1,5 +1,12 @@
 <template>
   <ion-page>
+    <Teleport to="body" v-if="isLoading">
+      <div class="flex justify-center items-center fixed z-50 w-full h-full bg-[rgba(0,0,0,0.4)]">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24"><path fill="#fff" d="M2,12A10.94,10.94,0,0,1,5,4.65c-.21-.19-.42-.36-.62-.55h0A11,11,0,0,0,12,23c.34,0,.67,0,1-.05C6,23,2,17.74,2,12Z"><animateTransform attributeName="transform" dur="0.6s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>
+        </div>
+      </div>
+    </Teleport>
     <div class="detail-wrapper" :style="{ backgroundImage: `url(${backgroundImage})` }">
       <RouterLink :to="{ name: 'home' }" class="btn-back" @click="onBack">
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
@@ -31,7 +38,7 @@
           <div class="content-infor">
             <h2 class="text-2xl mb-1">Thông tin chung</h2>
             <div class="summary">
-              <p>{{
+              <p v-if="detail">{{
                 isShowFullText ? detail?.description : detail?.description.slice(0, 80) + '...'
               }}</p>
               <button class=" text-blue-600" @click="isShowFullText = !isShowFullText">
@@ -42,7 +49,7 @@
             <div class="flex justify-around mt-5 mb-5 px-4 py-2 bg-gray-100 rounded-2xl">
               <div class="flex flex-col items-center">
                 <p class=" font-bold">Kinh phí</p>
-                <p>{{ getHalfBudget(detail?.budget ?? '', detail?.numberOfPeople ?? 1) }} VNĐ/người</p>
+                <p v-if="detail">{{ getHalfBudget(detail?.budget ?? '', detail?.numberOfPeople ?? 1)|| '' }} VNĐ/người</p>
               </div>
               <div v-if="detail && detail.fromDate && detail.fromDate" class="flex flex-col items-center">
                 <p class=" font-bold">Thời gian</p>
@@ -86,6 +93,8 @@ enum EVote {
   DOWN = 'down',
   UNVOTE = 'unvote'
 }
+
+const isLoading = ref(false);
 const voteValue = ref<EVote>(EVote.UNVOTE);
 const stopList = ref<Stop[] | any[]>([]);
 
@@ -109,6 +118,7 @@ import { getImageFromDestination, getTimeLine, voteTimeline } from '@/services/t
 
 const backgroundImage = ref<string>('');
 const fetchDetail = async () => {
+  isLoading.value = true;
   const res = await getTimeLine(String(id));
   stopList.value = splitArrayByTimeRange(res.stops ?? []) ?? [];
   detail.value = res;
@@ -119,6 +129,7 @@ const fetchDetail = async () => {
     // detail.value.urlImage = url;
     backgroundImage.value = url.results[0].urls.regular;
   });
+  isLoading.value = false;
 }
 async function handleVoteTimeline(vote: EVote) {
   try {
