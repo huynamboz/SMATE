@@ -52,6 +52,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/detail/:id',
+    name: 'detail',
     component: () => import('@/views/_id/DetailPage.vue')
   },
   {

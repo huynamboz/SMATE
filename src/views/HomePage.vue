@@ -11,6 +11,10 @@
                 :address-card="item" @click="chooseAdrress(item.title)" />
         </div>
         <div class="home-page-tour-cards">
+          <div class="home-page-tour-cards-item"
+               >
+                <img class="rounded-md" src="/ads.jpg" alt="">
+            </div>
             <router-link class="home-page-tour-cards-item" v-for="item in timelineList" :key="item._id"
                 :to="`/detail/${item._id}`">
                 <tour-card :tour-item="item"

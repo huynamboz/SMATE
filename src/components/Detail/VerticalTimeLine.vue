@@ -54,7 +54,7 @@ const goToAddressDetail = (id: number) => {
 <template>
   <div class="timeline-wrapper mt-5">
     <ul class="StepProgress">
-      <li v-for="(item, index) in timelines" :key="item.name" class="StepProgress-item" :class="{ 'is-done': item?.isDone}">
+      <li v-for="(item, index) in timelines" :key="item.name" class="StepProgress-item">
         <div class="bold time w-[64px] -top-4">{{ item.time_range.split(" - ").join("\n") }}</div>
         <div class="bold" @click="goToAddressDetail(index)">{{ item.name }}</div>
         <div>{{ item.activity }}</div>

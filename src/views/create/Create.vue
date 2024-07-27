@@ -1,17 +1,22 @@
 <template>
   <ion-page>
-    <div class="loading" v-if="isLoading">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-        <path fill="#000000" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
-          opacity=".25" />
-        <path fill="#000000"
-          d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z">
-          <animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate"
-            values="0 12 12;360 12 12" />
-        </path>
-      </svg>
-      <p>Đang tạo...</p>
-    </div>
+    <Teleport to="body">
+      <div class="loading" v-if="isLoading">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+          <path fill="#000000" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+            opacity=".25" />
+          <path fill="#000000"
+            d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z">
+            <animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate"
+              values="0 12 12;360 12 12" />
+          </path>
+        </svg>
+        <p>Đang tạo...</p>
+        <div class="p-5">
+          <img src="/ads2.jpg" alt="">
+        </div>
+      </div>
+    </Teleport>
     <div class="relative h-screen">
         <div class="fixed w-full left-0 text-3xl font-bold text-center top-12 z-10 text-white">Tạo lịch trình</div>
         <div class="absolute w-full h-[40vh] z-[-1]">
@@ -23,22 +28,24 @@
         <div class="p-5 bg-white rounded-2xl overflow-y-auto h-full">
           <div>
             <p>Tìm kiếm địa điểm</p>
-            <InputText class="w-full mt-2" type="text" v-model="destination" placeholder="Nhập địa điểm..." />
+            <AutoComplete class="!w-full mt-2" v-model="payload.destination" :suggestions="listCitySuggest" @complete="search" placeholder="Nhập địa điểm..." />
           </div>
           <div class="mt-5">
             <div class="time-travel">
               <div class="time-travel__header">
                 <p>Thời gian</p>
-                <p>5 ngày</p>
+                <p>
+                  {{calculateDaysBetween(payload.fromDate.toISOString().split("T")[0], payload.toDate.toISOString().split("T")[0]) || ' '}} ngày
+                </p>
               </div>
               <div class="time-travel__main">
                 <div class="time-travel__main__item">
                   <p>Ngày đi</p>
-                  <DatePicker dateFormat="dd/mm/yy" v-model="startDate" />
+                  <DatePicker dateFormat="dd/mm/yy" v-model="payload.fromDate" />
                 </div>
                 <div class="time-travel__main__item">
                   <p>Ngày về</p>
-                  <DatePicker dateFormat="dd/mm/yy" v-model="endDate" />
+                  <DatePicker dateFormat="dd/mm/yy" v-model="payload.toDate" />
                 </div>
               </div>
             </div>
@@ -46,10 +53,10 @@
             <!-- range -->
             <div class="w-full mt-5">
             <p>
-              Ngân sách: {{ formatNumber(budget[0]) }} - {{ formatNumber(budget[1]) }} VND
+              Ngân sách: {{ formatNumber(payload.budget) }} VND
             </p>
             <div class="mt-5">
-              <Slider :step="100000" v-model="budget" range class="w-full" :min="0" :max="100000000"/>
+              <Slider :step="500000" v-model="payload.budget" class="w-full" :min="0" :max="100000000"/>
             </div>
           </div>
 
@@ -65,12 +72,12 @@
             </div>
 
             <div class="mt-5">
-              <p>Địa điểm muốn ghé:</p>
-              <InputText class="w-full mt-2" type="text" v-model="desiredLocation" placeholder="vd: Sông Hương, kinh thành Huế" />
+              <p>Ẩm thực muốn thưởng thức:</p>
+              <InputText class="w-full mt-2" type="text" v-model="payload.favoriteFoods" placeholder="vd: Ẩm thực địa phương..vv" />
             </div>
             <div class="mt-5">
               <p>Yêu cầu khác:</p>
-              <InputText class="w-full mt-2" type="text" v-model="desiredLocation" placeholder="Nhập yêu cầu khác" />
+              <InputText class="w-full mt-2" type="text" v-model="payload.otherSpecialRequests" placeholder="Nhập yêu cầu khác" />
             </div>
 
             <div class="field">
@@ -92,14 +99,18 @@ import DatePicker from 'primevue/datepicker';
 import Slider from 'primevue/slider';
 import { formatNumber } from '@/utils/price';
 import { addCircle, removeCircle } from 'ionicons/icons';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { IonInput, IonLabel, IonIcon } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import Button from 'primevue/button';
+import location from "@/utils/location.json"
+import { calculateDaysBetween } from '@/utils/time';
+import AutoComplete from 'primevue/autocomplete';
+import { createTimeline } from '@/services/timeline';
 
 const startDate = ref(new Date());
 const endDate = ref(new Date());
-const budget = ref([500000, 5000000]);
+const budget = ref(500000);
 const desiredLocation = ref('');
 
 const destination = ref('');
@@ -107,6 +118,50 @@ const customer = ref(1);
 function addCustomer() {
   customer.value++;
 }
+
+const listCitySuggest = ref<any[]>([]);
+const search = () => {
+  listCitySuggest.value = location.filter(city => city.name.toLowerCase().includes(payload.value.destination.toLowerCase())).map(city => city.name);
+}
+
+export interface Payload {
+  destination: string
+  fromDate: Date
+  toDate: Date
+  numberOfPeople: number
+  budget: any
+  preferredTypeOfTravel: string
+  typeOfTravel: string
+  favoriteActivities: string
+  favoriteFoods: string
+  otherSpecialRequests: string
+}
+
+const payload = ref<Payload>({
+  destination: '',
+  fromDate: new Date(),
+  toDate: new Date(),
+  numberOfPeople: 1,
+  budget: 500000,
+  preferredTypeOfTravel: 'Văn hóa',
+  typeOfTravel: 'Tham quan',
+  favoriteActivities: 'Thăm các địa điểm du lịch',
+  favoriteFoods: '',
+  otherSpecialRequests: ''
+});
+
+const payloadComputed = computed(() => {
+  return {
+    ...payload.value,
+    fromDate: payload.value.fromDate.toISOString().split('T')[0],
+    toDate: payload.value.toDate.toISOString().split('T')[0],
+    budget: formatNumber(payload.value.budget) + ' VND',
+    destination: payload.value.destination + ' Việt Nam',
+    favoriteFoods: payload.value.favoriteFoods || 'Ẩm thực địa phương, Bánh ngọt',
+    otherSpecialRequests: payload.value.otherSpecialRequests || 'Cần danh sách nhà hàng',
+    numberOfPeople: customer.value
+  }
+});
 
 function removeCustomer() {
   if (customer.value > 1) {
@@ -116,13 +171,34 @@ function removeCustomer() {
 
 const isLoading = ref(false);
 const router = useRouter();
-const onSubmited = () => {
-  isLoading.value = true;
-  setTimeout(() => {
-    router.push('/detail/4');
-    isLoading.value = false;
 
-  }, 2000);
+
+const onSubmited = async () => {
+  isLoading.value = true;
+  try {
+    console.log(payloadComputed.value);
+    // const data = await createTimeline(payloadComputed.value);
+    await new Promise((resolve) => setTimeout(() => {
+      resolve(true);
+      router.push({
+        name: 'detail',
+        params: {
+          id: '66a4fc6986890b5200653f8a'
+        }
+      });
+    }, 3000));
+    // console.log(data);
+    // router.push({
+    //   name: 'detail',
+    //   params: {
+    //     id: data._id
+    //   }
+    // });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    isLoading.value = false;
+  }
 }
 </script>
 <style scoped>

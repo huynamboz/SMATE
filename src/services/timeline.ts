@@ -13,15 +13,17 @@ export const getTimeLine = async (id: string) => {
 }
 
 export const createTimeline = async (data: any) => {
-  return $http('/timelines', {
+  return $http('/timelines/generate', {
     method: 'POST',
-    body: data,
+    body: {
+      data: data,
+    },
   });
 }
 
 export const getImageFromDestination = async (destination: string) => {
   return $http(`/get-images`, {
-    baseURL: 'http://103.163.119.204:3000',
+    baseURL: 'https://api.unlockscan.site',
     method: 'GET',
     query: {
       destination: destination,

@@ -61,7 +61,6 @@ const handleRegister = async () => {
             </div>
             
             <Button @click="handleRegister" class="mt-10 h-14 w-full rounded-full" label="Đăng ký" />
-            <router-link :to="{name: 'tabs'}" class=" text-blue-700">Đăng nhập</router-link>
             <p class="text-center mt-5">Đã có tài khoản?
               <router-link :to="{name: 'login'}" class=" text-blue-700">Đăng nhập</router-link>
             </p>

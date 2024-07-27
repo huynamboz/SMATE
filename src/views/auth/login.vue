@@ -6,22 +6,35 @@ import Button from 'primevue/button';
 import { IonPage } from '@ionic/vue';
 import { notify } from '@/utils/toast';
 import { useRouter } from 'vue-router';
+import { loginApi } from '@/services/auth';
+import { ref } from 'vue';
 const router = useRouter();
+const email = ref('anhaanh2003@gmail.com');
+const password = ref('123456Aa');
+
 const handleLogin = async () => {
   console.log('Login');
-  notify.success('Đăng nhập thành công');
-  await new Promise((resolve) => setTimeout(() => {
-    router.push({name: 'home'});
-    resolve(true);
-  }, 1000));
+  try {
+    const data = await loginApi({
+      email: email.value,
+      password: password.value
+    })
+    notify.success('Đăng nhập thành công');
+    console.log(data);
+    await new Promise((resolve) => setTimeout(() => {
+      router.push('/tabs');
+      resolve(true);
+    }, 1000));
+    localStorage.setItem('token', data.access_token);
+  } catch (error) {
+    notify.error('Đăng nhập thất bại'); 
+  }
 };
 </script>
 <template>
   <ion-page>
     <div class="relative w-full h-screen">
-      <img class="absolute z-[-1] top-0 left-0"
-        src="@/assets/img/bg2.avif"
-        alt="">
+      <img class="absolute z-[-1] top-0 left-0" src="@/assets/img/bg2.avif" alt="">
       <div class="absolute p-8 z-10 h-[70vh] bottom-0 bg-white w-full left-0 rounded-tl-[36px] rounded-tr-[36px]">
         <div class="relative">
           <p class="-top-32 left-0 z-10 absolute font-semibold text-white text-2xl w-[80%]">Thưởng thức chuyến đi của
@@ -34,7 +47,7 @@ const handleLogin = async () => {
                 <InputGroupAddon>
                   <Icon icon="solar-user-bold-duotone" />
                 </InputGroupAddon>
-                <InputText placeholder="Example@gmail.com" />
+                <InputText v-model="email" placeholder="Example@gmail.com" />
               </InputGroup>
             </div>
 
@@ -44,13 +57,14 @@ const handleLogin = async () => {
                 <InputGroupAddon>
                   <Icon icon="solar-lock-keyhole-minimalistic-unlocked-bold-duotone" />
                 </InputGroupAddon>
-                <InputText placeholder="******" />
+                <InputText v-model="password" placeholder="******" />
               </InputGroup>
             </div>
             <Button class="mt-10 h-14 w-full rounded-full" @click="handleLogin" label="Đăng nhập" />
             <p class="text-center mt-5">Chưa có tài khoản?
               <router-link to="/auth/register" class=" text-blue-700">Đăng ký</router-link>
             </p>
+            <router-link to="/tabs" class="text-center w-full block mt-5 text-blue-700">Tiếp tục với tư cách khách</router-link>
           </div>
         </div>
       </div>
