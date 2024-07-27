@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <div class="detail-wrapper" :style="{backgroundImage: `url(${detail?.urlImage})`}">
+    <div v-if="detail" class="detail-wrapper" :style="{backgroundImage: `url(${backgroundImage})`}">
       <RouterLink :to="{name: 'home'}" class="btn-back" @click="onBack">
         <ion-icon :icon="chevronBackOutline" style="font-size: 26px"></ion-icon>
       </RouterLink>
@@ -19,7 +19,7 @@
           <h1>{{ detail?.title }}</h1>
           <div class="location">
             <ion-icon :icon="location" style="font-size: 20px"></ion-icon>
-            {{detail?.address}}
+            {{detail?.destination}}
           </div>
         </div>
 
@@ -38,8 +38,8 @@
 
             <div class="flex justify-around mt-5 mb-5">
               <div class="flex flex-col items-center">
-                <p class=" font-bold">Giá cả</p>
-                <p>1500k/ người</p>
+                <p class=" font-bold">Kinh phí</p>
+                <p>{{ detail.budget }}</p>
               </div>
               <div class="flex flex-col items-center">
                 <p class=" font-bold">Thời gian</p>
@@ -51,7 +51,7 @@
 
             <!-- <span  style="white-space: pre-line" v-html="detail.timeLine">
             </span> -->
-            <VerticalTimeLine :stop="stop"/>
+            <VerticalTimeLine :timelines="detail.stops"/>
           </div>
         </div>
       </div>
@@ -82,12 +82,19 @@ const detail = ref<Timeline>();
 const id = route.params.id;
 
 import tours from '@/data/tourListData';
-import { getTimeLine } from '@/services/timeline';
+import { getImageFromDestination, getTimeLine } from '@/services/timeline';
 
+const backgroundImage = ref<string>('');
 const fetchDetail = async () => {
   const res = await getTimeLine(id);
-  detail.value = res.data;
+  detail.value = res;
+  await getImageFromDestination(detail.value.destination).then((url) => {
+    console.log(url);
+    // detail.value.urlImage = url;
+    backgroundImage.value = url.results[0].urls.regular;
+  });
 }
+
 onBeforeMount(async () => {
   console.log(id);
   await fetchDetail();
@@ -97,6 +104,11 @@ onBeforeMount(async () => {
 export interface Timeline {
   _id: string
   user_id: UserId
+  destination: string
+  fromDate: string
+  toDate: string
+  numberOfPeople: number
+  budget: string
   description: string
   stops: Stop[]
   google_map_link: string
@@ -120,10 +132,10 @@ export interface Stop {
   name: string
   activity: string
   address: string
-  photos: Photo[]
+  photos: any[]
   phone: string
-  reviews: Review[]
-  rating?: number
+  reviews: any[]
+  rating: any
   time_range: string
   website: string
   google_map_link: string
@@ -132,26 +144,6 @@ export interface Stop {
   created_at: string
   updated_at: string
   __v: number
-}
-
-export interface Photo {
-  height: number
-  html_attributions: string[]
-  photo_reference: string
-  width: number
-}
-
-export interface Review {
-  author_name: string
-  author_url: string
-  language: string
-  original_language: string
-  profile_photo_url: string
-  rating: number
-  relative_time_description: string
-  text: string
-  time: number
-  translated: boolean
 }
 
 </script>

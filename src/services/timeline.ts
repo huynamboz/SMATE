@@ -18,3 +18,13 @@ export const createTimeline = async (data: any) => {
     body: data,
   });
 }
+
+export const getImageFromDestination = async (destination: string) => {
+  return $http(`/get-images`, {
+    baseURL: 'http://103.163.119.204:3000',
+    method: 'GET',
+    query: {
+      destination: destination,
+    },
+  });
+}
