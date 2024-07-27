@@ -21,7 +21,7 @@
         <div class="fixed w-full left-0 text-3xl font-bold text-center top-12 z-10 text-white">Tạo lịch trình</div>
         <div class="absolute w-full h-[40vh] z-[-1]">
         <img
-          src="https://images.unsplash.com/photo-1721715115717-8dfeea6bfb8a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src="/bg.avif"
           class="w-full h-full object-cover" />
       </div>
       <div class="p-5 absolute w-full bottom-0 h-[80vh] z-10">
@@ -52,14 +52,17 @@
 
             <!-- range -->
             <div class="w-full mt-5">
-            <p>
-              Ngân sách: {{ formatNumber(payload.budget) }} VND
-            </p>
+            <div>
+              <div class="flex gap-2">
+                <p>Ngân sách:</p> {{ formatNumber(payload.budget) }} VND
+              </div>
+              <InputText class="w-full mt-2" type="number" v-model.number="payload.budget" />
+            </div>
             <div class="mt-5">
               <Slider :step="500000" v-model="payload.budget" class="w-full" :min="0" :max="100000000"/>
             </div>
           </div>
-
+<br>
             <div class="field customer">
               <p>
                 Khách
