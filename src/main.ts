@@ -57,12 +57,14 @@ const MyPreset = definePreset(Aura, {
       }
   }
 });
+import VImage from './plugins/images'
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
   app.component('Icon', Icon)
   app.use(MotionPlugin)
   app.use(createPinia())
+  app.use(VImage)
   app.use(toastConfig.Vue3Toastify, toastConfig.options);
   app.use(PrimeVue, {
   theme: {

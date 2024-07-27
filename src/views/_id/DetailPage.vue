@@ -51,6 +51,7 @@
 
             <!-- <span  style="white-space: pre-line" v-html="detail.timeLine">
             </span> -->
+            <img v-image="backgroundImage" alt="">
             <VerticalTimeLine :timelines="detail.stops"/>
           </div>
         </div>
