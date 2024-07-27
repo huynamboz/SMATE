@@ -36,7 +36,7 @@ import './theme/variables.css';
 import './assets/ionic.css'
 import './assets/css/main.css'
 import { MotionPlugin } from '@vueuse/motion'
-
+import { toastConfig } from "./utils/toast";
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
@@ -63,16 +63,17 @@ const app = createApp(App)
   app.component('Icon', Icon)
   app.use(MotionPlugin)
   app.use(createPinia())
+  app.use(toastConfig.Vue3Toastify, toastConfig.options);
   app.use(PrimeVue, {
-    theme: {
-        preset: MyPreset,
-        options: {
-          cssLayer: {
-              name: 'primevue',
-              order: 'tailwind-base, primevue, tailwind-utilities'
-          }
-      }
+  theme: {
+      preset: MyPreset,
+      options: {
+        cssLayer: {
+            name: 'primevue',
+            order: 'tailwind-base, primevue, tailwind-utilities'
+        }
     }
+  }
 });
 
 router.isReady().then(() => {

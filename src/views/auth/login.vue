@@ -3,8 +3,18 @@ import InputText from 'primevue/inputtext';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import Button from 'primevue/button';
-import { IonSearchbar, IonPage } from '@ionic/vue';
-
+import { IonPage } from '@ionic/vue';
+import { notify } from '@/utils/toast';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const handleLogin = async () => {
+  console.log('Login');
+  notify.success('Đăng nhập thành công');
+  await new Promise((resolve) => setTimeout(() => {
+    router.push({name: 'home'});
+    resolve(true);
+  }, 1000));
+};
 </script>
 <template>
   <ion-page>
@@ -37,7 +47,7 @@ import { IonSearchbar, IonPage } from '@ionic/vue';
                 <InputText placeholder="******" />
               </InputGroup>
             </div>
-            <Button class="mt-10 h-14 w-full rounded-full" label="Đăng nhập" />
+            <Button class="mt-10 h-14 w-full rounded-full" @click="handleLogin" label="Đăng nhập" />
             <p class="text-center mt-5">Chưa có tài khoản?
               <router-link to="/auth/register" class=" text-blue-700">Đăng ký</router-link>
             </p>
