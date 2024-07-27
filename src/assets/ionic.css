@@ -25,3 +25,27 @@
     display: none;
   }
 }
+
+.p-carousel-content {
+  .p-button {
+    display: none;
+  }
+}
+
+.reivew-ratting {
+  .p-rating-icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.address-detail {
+  .p-virtualscroller {
+    border: none;
+  }
+  .p-virtualscroller-content {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+}
