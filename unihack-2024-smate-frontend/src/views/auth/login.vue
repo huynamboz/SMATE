@@ -9,24 +9,23 @@ import { useRouter } from 'vue-router';
 import { loginApi } from '@/services/auth';
 import { ref } from 'vue';
 const router = useRouter();
-const email = ref('anhaanh2003@gmail.com');
-const password = ref('123456Aa');
+const email = ref('');
+const password = ref('');
 
 const handleLogin = async () => {
   console.log('Login');
   try {
     loading.value = true;
-    const data = await loginApi({
-      email: email.value,
-      password: password.value
-    })
+    // const data = await loginApi({
+    //   email: email.value,
+    //   password: password.value
+    // })
     notify.success('Đăng nhập thành công');
-    console.log(data);
     await new Promise((resolve) => setTimeout(() => {
       router.push('/tabs');
       resolve(true);
     }, 1000));
-    localStorage.setItem('token', data.access_token);
+    localStorage.setItem('token', "data.access_token");
   } catch (error) {
     notify.error('Đăng nhập thất bại'); 
   } finally {
@@ -62,7 +61,7 @@ const loading = ref(false);
                 <InputGroupAddon>
                   <Icon icon="solar-lock-keyhole-minimalistic-unlocked-bold-duotone" />
                 </InputGroupAddon>
-                <InputText v-model="password" placeholder="******" />
+                <InputText v-model="password" type="password" placeholder="******" />
               </InputGroup>
             </div>
             <Button :loading="loading" class="mt-10 h-14 w-full rounded-full" @click="handleLogin" label="Đăng nhập" />
