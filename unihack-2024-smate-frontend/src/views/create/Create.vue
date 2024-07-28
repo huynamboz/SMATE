@@ -186,7 +186,7 @@ const onSubmited = async () => {
       router.push({
         name: 'detail',
         params: {
-          id: '66a4fc6986890b5200653f8a'
+          id: '66a51f5084382d057743ab60'
         }
       });
     }, 3000));
