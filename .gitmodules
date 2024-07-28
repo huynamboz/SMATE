@@ -1,0 +1,3 @@
+[submodule "unihack-2024-smate-server"]
+	path = unihack-2024-smate-server
+	url = https://github.com/buituananhdev/unihack-2024-smate-server.git
