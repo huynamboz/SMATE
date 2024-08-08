@@ -35,7 +35,7 @@ function chooseAdrress(title: string) {
 
 function filterActiveFavoriteTour() {
     favoriteTours.value.forEach(item => activeFavoriteIcon.value[item] = true )
-    console.log(activeFavoriteIcon.value);
+    console.log(activeFavoriteIcon.value)
 }
 
 function addToFavoriteTours(id: number) {
